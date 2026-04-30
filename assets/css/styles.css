@@ -349,17 +349,15 @@ main {
 
 /* Charts */
 .charts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 20px;
+  display: block;
   margin: 32px 0;
 }
-.chart-card-full {
-  max-width: none;
-  margin: 0;
+.charts .chart-card {
+  width: 100%;
+  box-sizing: border-box;
 }
 .chart-card-full .chart-wrap {
-  height: 480px;
+  height: 520px;
 }
 .chart-card {
   background: var(--color-surface);
