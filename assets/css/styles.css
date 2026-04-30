@@ -137,6 +137,11 @@ main {
   line-height: 1.65;
 }
 .intro-box p:last-child { margin-bottom: 0; }
+.intro-box-link {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+.intro-box-link:hover { color: var(--color-accent-dark); }
 
 /* Scope note (small italic context line under tiles) */
 .scope-note {
