@@ -48,7 +48,7 @@
       Extended Producer Responsibility legislation for packaging across the United States.
       Browse <strong data-slot="total-bills"></strong> bills tracked across <strong data-slot="total-states"></strong> states.
     </p>
-    <p class="meta">Snapshot from February 2026. Refreshed when the SPC source updates.</p>
+    <p class="meta">Live data from the Sustainable Packaging Coalition. Last refreshed <span data-slot="fetched-at">today</span>.</p>
   </section>
 
   <section class="intro-box">
@@ -97,10 +97,10 @@
   </section>
 
   <p class="scope-note">
-    Counts reflect the SPC database snapshot from February 2026. Some bills track multiple legislative
-    versions of the same state program, so the count of "Passed Laws" can be higher than the count
-    of unique state programs. The tracker does not currently include early-mover state laws (Maine,
-    Oregon, California) which were not captured in this SPC export.
+    Counts mirror the live SPC database. "Passed Laws" counts only bills with a current status of
+    "Passed". Earlier amendment versions of the same state program are tracked separately under
+    "Amended". A bill's count therefore reflects legislative activity, not the number of unique
+    state programs.
   </p>
 
   <section class="charts">
@@ -126,7 +126,7 @@
     <p>
       This tracker presents United States packaging Extended Producer Responsibility (EPR) bills and laws,
       based on the <a href="https://epr.sustainablepackaging.org/policies" target="_blank" rel="noopener">Sustainable Packaging Coalition / GreenBlue EPR Policy Database</a>.
-      Data was last refreshed in February 2026.
+      Data refreshes daily directly from SPC; no manual export step.
     </p>
 
     <h2>What is EPR?</h2>
@@ -166,7 +166,7 @@
       only that it was not included in the bill language. Many EPR proposals specify what should be included in the plan, but the details are left to be determined during plan development by the PRO.
     </p>
 
-    <h3>The 17 Elements Tracked</h3>
+    <h3>Elements tracked</h3>
     <div data-slot="elements-list"></div>
   </article>
 </template>
@@ -208,7 +208,7 @@
   <a class="back-link" href="#/browse">&larr; Back to all bills</a>
   <article class="bill-detail">
     <header class="bill-header">
-      <p class="bill-eyebrow"><span data-slot="state"></span> &bull; <span data-slot="year"></span></p>
+      <p class="bill-eyebrow"><span data-slot="state"></span> &bull; <span data-slot="date"></span></p>
       <h1 data-slot="name"></h1>
       <p class="bill-id">Bill ID: <span data-slot="id"></span></p>
       <p class="bill-status">
@@ -216,6 +216,8 @@
       </p>
       <p class="bill-source" data-slot="source-line"></p>
     </header>
+
+    <section class="bill-summary" data-slot="summary"></section>
 
     <section class="compliance-snapshot" data-slot="compliance">
       <h2>Compliance Snapshot</h2>

@@ -1,0 +1,542 @@
+{
+  "metadata": {
+    "source": "Sustainable Packaging Coalition / GreenBlue EPR Policy Database",
+    "source_url": "https://epr.sustainablepackaging.org/policies",
+    "fetched_at": "2026-04-30T04:15:18+00:00",
+    "build_id": "ffyn98CbLQOurNXW2C6Cq"
+  },
+  "categories": [
+    {
+      "key": "coveredProducts",
+      "title": "Covered Products",
+      "options": [
+        {
+          "key": "allPackagingTypes",
+          "title": "All Packaging Types"
+        },
+        {
+          "key": "exclusions",
+          "title": "Exclusions"
+        },
+        {
+          "key": "paperProducts",
+          "title": "Paper Products"
+        },
+        {
+          "key": "beverageContainers",
+          "title": "Beverage Containers"
+        },
+        {
+          "key": "materialSpecific",
+          "title": "Material Specific"
+        }
+      ]
+    },
+    {
+      "key": "coveredEntities",
+      "title": "Covered Entities",
+      "options": [
+        {
+          "key": "householdresidential",
+          "title": "Household / Residential"
+        },
+        {
+          "key": "governmentInstitutionalOrAcademic",
+          "title": "Government, Institutional, or Academic"
+        },
+        {
+          "key": "publicSpaces",
+          "title": "Public Spaces"
+        },
+        {
+          "key": "businessOrCommercial",
+          "title": "Business or Commercial"
+        }
+      ]
+    },
+    {
+      "key": "producerDefinition",
+      "title": "Producer Definition",
+      "options": [
+        {
+          "key": "brands",
+          "title": "Brands"
+        },
+        {
+          "key": "licensees",
+          "title": "Licensees"
+        },
+        {
+          "key": "importersdistributors",
+          "title": "Importers / Distributors"
+        }
+      ]
+    },
+    {
+      "key": "producerExclusions",
+      "title": "Producer Exclusions",
+      "options": [
+        {
+          "key": "smallBusinesses",
+          "title": "Small Businesses"
+        },
+        {
+          "key": "governments",
+          "title": "Governments"
+        },
+        {
+          "key": "charities",
+          "title": "Charities"
+        },
+        {
+          "key": "retailers",
+          "title": "Retailers"
+        }
+      ]
+    },
+    {
+      "key": "producerResponsibilityOrganization",
+      "title": "Producer Responsibility Organization",
+      "options": [
+        {
+          "key": "collectiveProducerResponsibility",
+          "title": "Collective Producer Responsibility"
+        },
+        {
+          "key": "nonprofitRequirement",
+          "title": "Nonprofit Requirement"
+        },
+        {
+          "key": "individualProducerResponsibilityOption",
+          "title": "Individual Producer Responsibility Option"
+        },
+        {
+          "key": "individualProducerResponsibility",
+          "title": "Individual Producer Responsibility"
+        }
+      ]
+    },
+    {
+      "key": "structuretype",
+      "title": "Structure/Type",
+      "options": [
+        {
+          "key": "financialAndPartialOperational",
+          "title": "Financial and Partial Operational"
+        },
+        {
+          "key": "municipalReimbursementFinancialOnly",
+          "title": "Municipal Reimbursement Financial Only"
+        },
+        {
+          "key": "financialAndFullOperational",
+          "title": "Financial and Full Operational"
+        },
+        {
+          "key": "financialAndUndeterminedOperational",
+          "title": "Financial and Undetermined Operational"
+        }
+      ]
+    },
+    {
+      "key": "costCoverage",
+      "title": "Cost Coverage",
+      "options": [
+        {
+          "key": "operationalCosts",
+          "title": "Operational Costs"
+        },
+        {
+          "key": "educationAndOutreach",
+          "title": "Education and Outreach"
+        },
+        {
+          "key": "administration",
+          "title": "Administration"
+        },
+        {
+          "key": "marketDevelopment",
+          "title": "Market Development"
+        },
+        {
+          "key": "infrastructureImprovements",
+          "title": "Infrastructure Improvements"
+        },
+        {
+          "key": "litterPrevention",
+          "title": "Litter Prevention"
+        }
+      ]
+    },
+    {
+      "key": "feeStructure",
+      "title": "Fee Structure",
+      "options": [
+        {
+          "key": "productRelated",
+          "title": "Product-Related"
+        },
+        {
+          "key": "modulated",
+          "title": "Modulated"
+        },
+        {
+          "key": "fixedRate",
+          "title": "Fixed Rate"
+        }
+      ]
+    },
+    {
+      "key": "ecoModulation",
+      "title": "Eco-Modulation",
+      "options": [
+        {
+          "key": "reuse",
+          "title": "Reuse"
+        },
+        {
+          "key": "lightWeighting",
+          "title": "Light Weighting"
+        },
+        {
+          "key": "design",
+          "title": "Design"
+        },
+        {
+          "key": "recyclability",
+          "title": "Recyclability"
+        },
+        {
+          "key": "recycledContent",
+          "title": "Recycled Content"
+        },
+        {
+          "key": "renewablySourced",
+          "title": "Renewably Sourced"
+        },
+        {
+          "key": "lifeCycleEmissions",
+          "title": "Life Cycle Emissions"
+        }
+      ]
+    },
+    {
+      "key": "targets",
+      "title": "Targets",
+      "options": [
+        {
+          "key": "rateTargets",
+          "title": "Rate Targets"
+        },
+        {
+          "key": "recycledContentTargets",
+          "title": "Recycled Content Targets"
+        },
+        {
+          "key": "targetsSetInLegislation",
+          "title": "Targets Set in Legislation"
+        },
+        {
+          "key": "adjustableTargets",
+          "title": "Adjustable Targets"
+        },
+        {
+          "key": "materialSpecificTargets",
+          "title": "Material Specific Targets"
+        }
+      ]
+    },
+    {
+      "key": "infrastructure",
+      "title": "Infrastructure",
+      "options": [
+        {
+          "key": "maximizesUseOfExistingInfrastructure",
+          "title": "Maximizes Use of Existing Infrastructure"
+        },
+        {
+          "key": "convenienceStandards",
+          "title": "Convenience Standards"
+        },
+        {
+          "key": "infrastructureImprovements",
+          "title": "Infrastructure Improvements"
+        }
+      ]
+    },
+    {
+      "key": "additionalPolicyLevers",
+      "title": "Additional Policy Levers",
+      "options": [
+        {
+          "key": "depositRefundSystem",
+          "title": "Deposit Refund System"
+        },
+        {
+          "key": "recycledContentMinimums",
+          "title": "Recycled Content Minimums"
+        },
+        {
+          "key": "mandatoryRecycling",
+          "title": "Mandatory Recycling"
+        },
+        {
+          "key": "landfillSurcharges",
+          "title": "Landfill Surcharges"
+        },
+        {
+          "key": "productOrMaterialBans",
+          "title": "Product or Material Bans"
+        },
+        {
+          "key": "payAsYouThrowPolicies",
+          "title": "Pay As You Throw Policies"
+        }
+      ]
+    },
+    {
+      "key": "timelines",
+      "title": "Timelines",
+      "options": [
+        {
+          "key": "deadlineToRegister",
+          "title": "Deadline to Register"
+        },
+        {
+          "key": "deadlineToSubmitPlan",
+          "title": "Deadline to Submit Plan"
+        },
+        {
+          "key": "dateOfImplementation",
+          "title": "Date of Implementation"
+        },
+        {
+          "key": "transitionPeriod",
+          "title": "Transition Period"
+        }
+      ]
+    },
+    {
+      "key": "governmentRole",
+      "title": "Government Role",
+      "options": [
+        {
+          "key": "planReviewAndApproval",
+          "title": "Plan Review and Approval"
+        },
+        {
+          "key": "enforcementAndMonitoring",
+          "title": "Enforcement and Monitoring"
+        },
+        {
+          "key": "fundAllocation",
+          "title": "Fund Allocation"
+        }
+      ]
+    },
+    {
+      "key": "enforcement",
+      "title": "Enforcement",
+      "options": [
+        {
+          "key": "reportingRequirements",
+          "title": "Reporting Requirements"
+        },
+        {
+          "key": "penalties",
+          "title": "Penalties"
+        }
+      ]
+    },
+    {
+      "key": "socialConsiderations",
+      "title": "Social Considerations",
+      "options": [
+        {
+          "key": "sociallyJustManagement",
+          "title": "Socially Just Management"
+        },
+        {
+          "key": "laborRequirements",
+          "title": "Labor Requirements"
+        },
+        {
+          "key": "communityOutreach",
+          "title": "Community Outreach"
+        }
+      ]
+    },
+    {
+      "key": "educationAndOutreach",
+      "title": "Education and Outreach",
+      "options": [
+        {
+          "key": "productLabeling",
+          "title": "Product Labeling"
+        },
+        {
+          "key": "endOfLifeInstructions",
+          "title": "End-of-Life Instructions"
+        },
+        {
+          "key": "litterPreventionCampaigns",
+          "title": "Litter Prevention Campaigns"
+        },
+        {
+          "key": "programAwareness",
+          "title": "Program Awareness"
+        },
+        {
+          "key": "sharedResponsibilityOfGovernmentAndPro",
+          "title": "Shared Responsibility of Government and Pro"
+        },
+        {
+          "key": "soleResponsibilityOfPro",
+          "title": "Sole Responsibility of PRO"
+        }
+      ]
+    },
+    {
+      "key": "stakeholderInvolvement",
+      "title": "Stakeholder Involvement",
+      "options": [
+        {
+          "key": "requiredConsultationDuringPlanDevelopment",
+          "title": "Required Consultation During Plan Development"
+        },
+        {
+          "key": "stakeholderAdvisoryCommittee",
+          "title": "Stakeholder Advisory Committee"
+        }
+      ]
+    },
+    {
+      "key": "recyclablerecyclingDefinition",
+      "title": "Recyclable/Recycling Definition",
+      "options": [
+        {
+          "key": "definesRecycling",
+          "title": "Defines \"Recycling\""
+        },
+        {
+          "key": "excludesAdvancedRecycling",
+          "title": "Excludes Advanced Recycling"
+        },
+        {
+          "key": "definesRecyclable",
+          "title": "Defines \"Recyclable\""
+        }
+      ]
+    },
+    {
+      "key": "other",
+      "title": "Other",
+      "options": [
+        {
+          "key": "antitrustProtections",
+          "title": "Antitrust Protections"
+        },
+        {
+          "key": "toxicSubstances",
+          "title": "Toxic Substances"
+        },
+        {
+          "key": "noPointOfSaleFees",
+          "title": "No Point-of-Sale Fees"
+        },
+        {
+          "key": "needsAssessment",
+          "title": "Needs Assessment"
+        },
+        {
+          "key": "statewideList",
+          "title": "Statewide List"
+        },
+        {
+          "key": "singleUseDefinition",
+          "title": "Single Use Definition"
+        },
+        {
+          "key": "definesReusable",
+          "title": "Defines \"Reusable\""
+        },
+        {
+          "key": "recyclableCategories",
+          "title": "Recyclable Categories"
+        },
+        {
+          "key": "wastePreventionAndReuse",
+          "title": "Waste Prevention and Reuse"
+        },
+        {
+          "key": "alternativeCollectionPrograms",
+          "title": "Alternative Collection Programs"
+        },
+        {
+          "key": "specifiesHowRatesAreMeasured",
+          "title": "Specifies How Rates Are Measured"
+        },
+        {
+          "key": "materialExemption",
+          "title": "Material Exemption"
+        },
+        {
+          "key": "wasteAudits",
+          "title": "Waste Audits"
+        },
+        {
+          "key": "labeling",
+          "title": "Labeling"
+        },
+        {
+          "key": "advertiserOption",
+          "title": "Advertiser Option"
+        },
+        {
+          "key": "contamination",
+          "title": "Contamination"
+        },
+        {
+          "key": "processorCommodityRiskFee",
+          "title": "Processor Commodity Risk Fee"
+        },
+        {
+          "key": "receptacleLabeling",
+          "title": "Receptacle Labeling"
+        },
+        {
+          "key": "greenhouseGasAssessments",
+          "title": "Greenhouse Gas Assessments"
+        },
+        {
+          "key": "eprStudy",
+          "title": "Epr Study"
+        },
+        {
+          "key": "advancedRecyclingConsiderations",
+          "title": "Advanced Recycling Considerations"
+        },
+        {
+          "key": "domesticProcessing",
+          "title": "Domestic Processing"
+        },
+        {
+          "key": "lifeCycleEvaluation",
+          "title": "Life Cycle Evaluation"
+        },
+        {
+          "key": "reliefFromPreviousRestrictions",
+          "title": "Relief From Previous Restrictions"
+        },
+        {
+          "key": "checkOffProgram",
+          "title": "Check Off Program"
+        },
+        {
+          "key": "virginResinFee",
+          "title": "Virgin Resin Fee"
+        }
+      ]
+    }
+  ]
+}

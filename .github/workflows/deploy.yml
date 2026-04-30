@@ -3,6 +3,9 @@ name: Build and deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  schedule:
+    # Refresh data daily at 06:00 UTC (about 02:00 EDT, 23:00 PDT)
+    - cron: "0 6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -25,16 +28,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Python deps
-        run: pip install openpyxl
-
-      - name: Regenerate JSON from source workbook
-        run: python scripts/xlsx_to_json.py
+      - name: Fetch latest data from SPC EPR Policy Database
+        run: python scripts/fetch_spc.py
 
       - name: Verify generated data
         run: |
-          test -f data/bills.json
+          test -f data/policies.json
           test -f data/aggregates.json
+          test -f data/fields.json
           ls -la data/
 
       - name: Upload Pages artifact

@@ -1,4 +1,9 @@
-/* US EPR Policy Tracker - Single-page app */
+/* US EPR Policy Tracker - Single-page app
+ * Reads SPC's native JSON shape:
+ *   data/policies.json   - { metadata, policies: [...] }
+ *   data/aggregates.json - { status_counts, state_counts, ..., elements }
+ *   data/fields.json     - { categories: [ { key, title, options: [{key, title}] } ] }
+ */
 (function () {
   'use strict';
 
@@ -11,29 +16,11 @@
     'Failed': '#a13a3a',
     'Unknown': '#6b7280',
   };
-  const ELEMENT_ORDER = [
-    'Covered Products',
-    'Exclusions',
-    'Producer Definition',
-    'Producer Exclusions',
-    'PRO Structure',
-    'Program Responsibility',
-    'Cost Coverage',
-    'Fee Structure',
-    'Targets',
-    'Convenience',
-    'Timeline',
-    'Oversight',
-    'Reporting',
-    'Education & Labeling',
-    'Stakeholder Engagement',
-    'Definitions',
-    'Other Provisions',
-  ];
 
   const state = {
-    bills: [],
+    policies: [],
     aggregates: null,
+    fields: null,
     statusFilter: new Set(),
     stateFilter: '',
     yearFilter: '',
@@ -62,11 +49,16 @@
   function escapeHtml(str) {
     if (str === null || str === undefined) return '';
     return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+    if (!m) return iso;
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[parseInt(m[2], 10) - 1]} ${parseInt(m[3], 10)}, ${m[1]}`;
   }
 
   function parseHash() {
@@ -77,17 +69,19 @@
   }
 
   async function loadData() {
-    const [billsRes, aggRes] = await Promise.all([
-      fetch('data/bills.json', { cache: 'no-cache' }),
+    const [polRes, aggRes, fieldsRes] = await Promise.all([
+      fetch('data/policies.json', { cache: 'no-cache' }),
       fetch('data/aggregates.json', { cache: 'no-cache' }),
+      fetch('data/fields.json', { cache: 'no-cache' }),
     ]);
-    if (!billsRes.ok || !aggRes.ok) {
+    if (!polRes.ok || !aggRes.ok || !fieldsRes.ok) {
       throw new Error('Could not load data files');
     }
-    const billsData = await billsRes.json();
-    const aggregates = await aggRes.json();
-    state.bills = billsData.bills;
-    state.aggregates = aggregates;
+    const polData = await polRes.json();
+    state.policies = polData.policies;
+    state.metadata = polData.metadata;
+    state.aggregates = await aggRes.json();
+    state.fields = await fieldsRes.json();
   }
 
   function destroyCharts() {
@@ -111,7 +105,6 @@
     } else if (path === '/about') {
       renderAbout(app);
     } else if (path === '/browse') {
-      // Honour ?status=... for the passed-laws tile
       if (params.has('status')) {
         state.statusFilter = new Set(params.getAll('status'));
       }
@@ -131,14 +124,14 @@
 
   function renderHome(root) {
     const node = el('tpl-home');
-    const totals = state.aggregates;
-    const total = state.bills.length;
-    const stateCount = Object.keys(totals.state_counts).filter(s => s !== 'Unknown').length;
-    const passed = totals.status_counts.Passed || 0;
+    const total = state.policies.length;
+    const stateCount = Object.keys(state.aggregates.state_counts).filter(s => s !== 'Unknown').length;
+    const passed = state.aggregates.status_counts.Passed || 0;
+
     let deadlines = 0;
-    state.bills.forEach(b => {
-      if (b.status !== 'Passed' && b.status !== 'Amended') return;
-      const t = b.provisions['Timeline'];
+    state.policies.forEach(p => {
+      if (p.status !== 'Passed' && p.status !== 'Amended') return;
+      const t = p.timelines;
       if (t) deadlines += Object.keys(t).length;
     });
 
@@ -148,28 +141,31 @@
     node.querySelector('[data-slot=all-count]').textContent = total;
     node.querySelector('[data-slot=deadlines-count]').textContent = deadlines;
 
+    if (state.metadata && state.metadata.fetched_at) {
+      const slot = node.querySelector('[data-slot=fetched-at]');
+      if (slot) slot.textContent = formatDate(state.metadata.fetched_at.slice(0, 10));
+    }
+
     const recentList = node.querySelector('[data-slot=recent-list]');
-    const recent = state.bills
-      .filter(b => b.status === 'Passed' || b.status === 'Amended')
-      .sort((a, b) => (b.year || 0) - (a.year || 0))
+    const recent = state.policies
+      .filter(p => p.status === 'Passed' || p.status === 'Amended')
       .slice(0, 6);
-    recent.forEach(b => {
+    recent.forEach(p => {
       const row = document.createElement('a');
-      row.href = '#/bill/' + encodeURIComponent(b.id);
+      row.href = '#/bill/' + encodeURIComponent(p.version);
       row.className = 'recent-row';
       row.innerHTML = `
         <div>
-          <strong>${escapeHtml(b.name)}</strong>
-          <div class="recent-meta">${escapeHtml(b.state || '')} &bull; ${escapeHtml(b.year || '')}</div>
+          <strong>${escapeHtml(p.fullTitle)}</strong>
+          <div class="recent-meta">${escapeHtml(p.locationPrimary || '')} &bull; ${escapeHtml(formatDate(p.date))}</div>
         </div>
-        ${statusBadge(b.status)}
+        ${statusBadge(p.status)}
       `;
       recentList.appendChild(row);
     });
 
     root.appendChild(node);
 
-    // Render charts after DOM insertion
     requestAnimationFrame(() => {
       renderStatusChart();
       renderStateChart();
@@ -191,11 +187,7 @@
         maintainAspectRatio: false,
         plugins: {
           legend: { position: 'right', labels: { boxWidth: 12, padding: 10 } },
-          tooltip: {
-            callbacks: {
-              label: (item) => `${item.label}: ${item.parsed} bills`,
-            },
-          },
+          tooltip: { callbacks: { label: (item) => `${item.label}: ${item.parsed} bills` } },
         },
       },
     });
@@ -211,7 +203,7 @@
     const labels = top.map(x => x[0]);
     const data = top.map(x => x[1]);
     if (otherSum) {
-      labels.push('Other states');
+      labels.push('Other');
       data.push(otherSum);
     }
     const palette = ['#0e6b56', '#2a7ad6', '#b88200', '#a13a3a', '#6b4ec5', '#136f63', '#1c637e', '#8a5b00', '#7d2a3a', '#9aa0a8'];
@@ -225,9 +217,7 @@
         maintainAspectRatio: false,
         plugins: {
           legend: { position: 'right', labels: { boxWidth: 12, padding: 8, font: { size: 11 } } },
-          tooltip: {
-            callbacks: { label: (item) => `${item.label}: ${item.parsed} bills` },
-          },
+          tooltip: { callbacks: { label: (item) => `${item.label}: ${item.parsed} bills` } },
         },
       },
     });
@@ -240,21 +230,17 @@
     const list = node.querySelector('[data-slot=elements-list]');
     list.className = 'elements-list';
 
-    const grouped = {};
-    state.aggregates.elements.forEach(e => {
-      if (!grouped[e.category]) grouped[e.category] = [];
-      grouped[e.category].push(e);
-    });
-
-    ELEMENT_ORDER.forEach((cat, i) => {
-      if (!grouped[cat]) return;
-      const opts = grouped[cat];
+    state.fields.categories.forEach((cat, i) => {
+      if (!cat.options.length) return;
       const div = document.createElement('div');
       div.className = 'element-item';
-      const totalBills = opts.reduce((m, o) => Math.max(m, o.bill_count), 0);
+      const counts = state.aggregates.elements
+        .filter(e => e.category === cat.title)
+        .map(e => e.bill_count);
+      const totalBills = counts.length ? Math.max(...counts) : 0;
       div.innerHTML = `
-        <div class="name"><span>${i + 1}. ${escapeHtml(cat)}</span><span class="count">up to ${totalBills} bills cover this</span></div>
-        <div class="options">${opts.map(o => `${escapeHtml(o.option)} (${o.bill_count})`).join(' &bull; ')}</div>
+        <div class="name"><span>${i + 1}. ${escapeHtml(cat.title)}</span><span class="count">up to ${totalBills} bills cover this</span></div>
+        <div class="options">${cat.options.map(o => `${escapeHtml(o.title)}`).join(' &bull; ')}</div>
       `;
       list.appendChild(div);
     });
@@ -267,16 +253,15 @@
   function renderBrowse(root) {
     const node = el('tpl-browse');
 
-    // Status chips
     const chipBox = node.querySelector('[data-slot=status-chips]');
     STATUS_ORDER.forEach(s => {
+      if (!(state.aggregates.status_counts[s] > 0)) return;
       const chip = document.createElement('button');
       chip.className = 'chip';
       chip.type = 'button';
       chip.textContent = s;
       const pressed = state.statusFilter.has(s);
       chip.setAttribute('aria-pressed', pressed ? 'true' : 'false');
-      if (pressed) chip.style.borderColor = STATUS_COLORS[s];
       chip.addEventListener('click', () => {
         if (state.statusFilter.has(s)) state.statusFilter.delete(s);
         else state.statusFilter.add(s);
@@ -286,10 +271,9 @@
       chipBox.appendChild(chip);
     });
 
-    // State filter
     const stateSel = node.querySelector('[data-slot=state-filter]');
-    const states = Array.from(new Set(state.bills.map(b => b.state).filter(Boolean))).sort();
-    states.forEach(s => {
+    const statesList = Array.from(new Set(state.policies.map(p => p.locationPrimary).filter(Boolean))).sort();
+    statesList.forEach(s => {
       const opt = document.createElement('option');
       opt.value = s;
       opt.textContent = s;
@@ -301,9 +285,8 @@
       rerenderBrowseList(node);
     });
 
-    // Year filter
     const yearSel = node.querySelector('[data-slot=year-filter]');
-    const years = Array.from(new Set(state.bills.map(b => b.year).filter(y => y != null))).sort((a, b) => b - a);
+    const years = Array.from(new Set(state.policies.map(p => p.year).filter(y => y != null))).sort((a, b) => b - a);
     years.forEach(y => {
       const opt = document.createElement('option');
       opt.value = y;
@@ -316,7 +299,6 @@
       rerenderBrowseList(node);
     });
 
-    // Search
     const search = node.querySelector('[data-slot=search-input]');
     search.value = state.searchQuery;
     search.addEventListener('input', () => {
@@ -324,7 +306,6 @@
       rerenderBrowseList(node);
     });
 
-    // Reset
     node.querySelector('[data-slot=reset]').addEventListener('click', () => {
       state.statusFilter.clear();
       state.stateFilter = '';
@@ -338,12 +319,12 @@
   }
 
   function rerenderBrowseList(scope) {
-    const filtered = state.bills.filter(b => {
-      if (state.statusFilter.size && !state.statusFilter.has(b.status)) return false;
-      if (state.stateFilter && b.state !== state.stateFilter) return false;
-      if (state.yearFilter && String(b.year) !== state.yearFilter) return false;
+    const filtered = state.policies.filter(p => {
+      if (state.statusFilter.size && !state.statusFilter.has(p.status)) return false;
+      if (state.stateFilter && p.locationPrimary !== state.stateFilter) return false;
+      if (state.yearFilter && String(p.year) !== state.yearFilter) return false;
       if (state.searchQuery) {
-        const hay = [b.name, b.state, b.id, b.status].filter(Boolean).join(' ').toLowerCase();
+        const hay = [p.fullTitle, p.locationPrimary, p.version, p.status, p.summary].filter(Boolean).join(' ').toLowerCase();
         if (!hay.includes(state.searchQuery)) return false;
       }
       return true;
@@ -353,8 +334,7 @@
       const sa = STATUS_ORDER.indexOf(a.status || 'Unknown');
       const sb = STATUS_ORDER.indexOf(b.status || 'Unknown');
       if (sa !== sb) return sa - sb;
-      if (a.state !== b.state) return (a.state || '').localeCompare(b.state || '');
-      return (b.year || 0) - (a.year || 0);
+      return (b.date || '').localeCompare(a.date || '');
     });
 
     const target = scope.querySelector('[data-slot=results]') || document.querySelector('[data-slot=results]');
@@ -370,18 +350,18 @@
     table.className = 'results-table';
     table.innerHTML = `
       <div class="results-row is-header">
-        <div>Bill</div><div>State</div><div>Year</div><div>Status</div><div></div>
+        <div>Bill</div><div>State</div><div>Date</div><div>Status</div><div></div>
       </div>
     `;
-    filtered.forEach(b => {
+    filtered.forEach(p => {
       const row = document.createElement('div');
-      row.className = 'results-row' + (b.status === 'Failed' ? ' is-failed' : '');
+      row.className = 'results-row' + (p.status === 'Failed' ? ' is-failed' : '');
       row.innerHTML = `
-        <div><strong>${escapeHtml(b.id)}</strong><br><span style="font-size:0.85rem;color:var(--color-text-muted)">${escapeHtml(b.name)}</span></div>
-        <div>${escapeHtml(b.state || '')}</div>
-        <div>${escapeHtml(b.year || '')}</div>
-        <div>${statusBadge(b.status)}</div>
-        <div><a class="view-btn" href="#/bill/${encodeURIComponent(b.id)}">View</a></div>
+        <div><strong>${escapeHtml(p.version)}</strong><br><span style="font-size:0.85rem;color:var(--color-text-muted)">${escapeHtml(p.fullTitle)}</span></div>
+        <div>${escapeHtml(p.locationPrimary || '')}</div>
+        <div>${escapeHtml(formatDate(p.date))}</div>
+        <div>${statusBadge(p.status)}</div>
+        <div><a class="view-btn" href="#/bill/${encodeURIComponent(p.version)}">View</a></div>
       `;
       table.appendChild(row);
     });
@@ -391,36 +371,49 @@
   // ---------- Bill detail ----------
 
   function renderBill(root, id) {
-    const bill = state.bills.find(b => b.id === id);
-    if (!bill) {
+    const policy = state.policies.find(p => p.version === id);
+    if (!policy) {
       root.appendChild(el('tpl-not-found'));
       return;
     }
     const node = el('tpl-bill');
-    node.querySelector('[data-slot=name]').textContent = bill.name || '';
-    node.querySelector('[data-slot=state]').textContent = bill.state || '';
-    node.querySelector('[data-slot=year]').textContent = bill.year || '';
-    node.querySelector('[data-slot=id]').textContent = bill.id || '';
-    node.querySelector('[data-slot=status-badge]').outerHTML = statusBadge(bill.status);
+    node.querySelector('[data-slot=name]').textContent = policy.fullTitle || '';
+    node.querySelector('[data-slot=state]').textContent = policy.locationPrimary || '';
+    node.querySelector('[data-slot=date]').textContent = formatDate(policy.date) || policy.year || '';
+    node.querySelector('[data-slot=id]').textContent = policy.version || '';
+    node.querySelector('[data-slot=status-badge]').outerHTML = statusBadge(policy.status);
 
     const sourceLine = node.querySelector('[data-slot=source-line]');
-    if (bill.source_url) {
-      sourceLine.innerHTML = `Source: <a href="${escapeHtml(bill.source_url)}" target="_blank" rel="noopener">View on SPC</a>`;
-    } else {
-      sourceLine.style.display = 'none';
+    const links = [];
+    if (policy.link) {
+      links.push(`<a href="${escapeHtml(policy.link)}" target="_blank" rel="noopener">Official bill text</a>`);
+    }
+    links.push(`<a href="https://epr.sustainablepackaging.org/policies/${encodeURIComponent(policy.version)}" target="_blank" rel="noopener">View on SPC</a>`);
+    sourceLine.innerHTML = `Source: ${links.join(' &bull; ')}`;
+
+    // Summary
+    const summaryWrap = node.querySelector('[data-slot=summary]');
+    if (summaryWrap) {
+      if (policy.summary) {
+        summaryWrap.textContent = policy.summary;
+      } else {
+        summaryWrap.style.display = 'none';
+      }
     }
 
-    // Compliance snapshot pulls Timeline category
-    const compliance = bill.provisions['Timeline'];
+    // Compliance Snapshot from timelines
+    const compliance = policy.timelines;
     const complianceWrap = node.querySelector('[data-slot=compliance]');
     const complianceBody = node.querySelector('[data-slot=compliance-body]');
     if (compliance && Object.keys(compliance).length) {
       const dl = document.createElement('dl');
+      const optionTitles = (state.fields.categories.find(c => c.key === 'timelines') || {}).options || [];
+      const titleByKey = Object.fromEntries(optionTitles.map(o => [o.key, o.title]));
       Object.keys(compliance).forEach(k => {
         const dt = document.createElement('dt');
-        dt.textContent = k;
+        dt.textContent = titleByKey[k] || k;
         const dd = document.createElement('dd');
-        dd.textContent = compliance[k].map(c => (c.heading ? c.heading + '. ' : '') + c.text).join(' ');
+        dd.textContent = compliance[k];
         dl.appendChild(dt);
         dl.appendChild(dd);
       });
@@ -429,39 +422,36 @@
       complianceWrap.style.display = 'none';
     }
 
-    // Provisions in fixed element order
+    // Provisions in field-defined category order
     const provBox = node.querySelector('[data-slot=provisions]');
-    ELEMENT_ORDER.forEach(cat => {
-      const subs = bill.provisions[cat];
-      if (!subs || !Object.keys(subs).length) return;
+    let firstOpened = false;
+    state.fields.categories.forEach(cat => {
+      const data = policy[cat.key];
+      if (!data || typeof data !== 'object' || !Object.keys(data).length) return;
       const det = document.createElement('details');
       det.className = 'element-card';
-      // Open the first card by default for context
-      if (cat === ELEMENT_ORDER.find(c => bill.provisions[c])) det.open = true;
+      if (!firstOpened) { det.open = true; firstOpened = true; }
       const sum = document.createElement('summary');
       sum.className = 'element-summary';
-      sum.innerHTML = `<span>${escapeHtml(cat)}</span><span style="color:var(--color-text-muted);font-weight:normal;font-size:0.85rem">${Object.keys(subs).length} provision${Object.keys(subs).length === 1 ? '' : 's'}</span>`;
+      const keyCount = Object.keys(data).length;
+      sum.innerHTML = `<span>${escapeHtml(cat.title)}</span><span style="color:var(--color-text-muted);font-weight:normal;font-size:0.85rem">${keyCount} provision${keyCount === 1 ? '' : 's'}</span>`;
       det.appendChild(sum);
       const body = document.createElement('div');
       body.className = 'element-body';
-      Object.keys(subs).forEach(name => {
+      const titleByKey = Object.fromEntries((cat.options || []).map(o => [o.key, o.title]));
+      Object.entries(data).forEach(([key, value]) => {
+        if (!value) return;
         const wrap = document.createElement('div');
         wrap.className = 'subprov';
         const h4 = document.createElement('h4');
-        h4.textContent = name;
+        h4.textContent = titleByKey[key] || humaniseKey(key);
         wrap.appendChild(h4);
-        subs[name].forEach(chunk => {
-          const p = document.createElement('p');
-          p.className = 'chunk';
-          if (chunk.heading) {
-            const span = document.createElement('span');
-            span.className = 'chunk-heading';
-            span.textContent = chunk.heading + '. ';
-            p.appendChild(span);
-          }
-          p.appendChild(document.createTextNode(chunk.text));
-          wrap.appendChild(p);
-        });
+        const p = document.createElement('p');
+        p.className = 'chunk';
+        // SPC text uses literal newlines and bullet markers; preserve line breaks
+        p.style.whiteSpace = 'pre-wrap';
+        p.textContent = value;
+        wrap.appendChild(p);
         body.appendChild(wrap);
       });
       det.appendChild(body);
@@ -476,6 +466,14 @@
     }
 
     root.appendChild(node);
+  }
+
+  // Light camelCase humaniser, used as a fallback when fields.json has no
+  // matching entry (e.g. SPC adds a new sub-field after our last fetch).
+  function humaniseKey(key) {
+    return key
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/^\w/, c => c.toUpperCase());
   }
 
   // ---------- Deadlines ----------
@@ -493,20 +491,22 @@
   }
 
   function renderDeadlinesTable(target) {
+    const optionTitles = (state.fields.categories.find(c => c.key === 'timelines') || {}).options || [];
+    const titleByKey = Object.fromEntries(optionTitles.map(o => [o.key, o.title]));
+
     const rows = [];
-    state.bills.forEach(b => {
-      if (state.deadlinesPassedOnly && b.status !== 'Passed' && b.status !== 'Amended') return;
-      const t = b.provisions['Timeline'];
+    state.policies.forEach(p => {
+      if (state.deadlinesPassedOnly && p.status !== 'Passed' && p.status !== 'Amended') return;
+      const t = p.timelines;
       if (!t) return;
       Object.keys(t).forEach(k => {
-        const summary = t[k].map(c => (c.heading ? c.heading + '. ' : '') + c.text).join(' ');
         rows.push({
-          state: b.state,
-          bill: b.name,
-          billId: b.id,
-          status: b.status,
-          deadlineType: k,
-          summary,
+          state: p.locationPrimary,
+          fullTitle: p.fullTitle,
+          version: p.version,
+          status: p.status,
+          deadlineType: titleByKey[k] || k,
+          summary: t[k],
         });
       });
     });
@@ -536,7 +536,7 @@
       row.innerHTML = `
         <div>${escapeHtml(r.state)}</div>
         <div>
-          <a href="#/bill/${encodeURIComponent(r.billId)}"><strong>${escapeHtml(r.bill)}</strong></a>
+          <a href="#/bill/${encodeURIComponent(r.version)}"><strong>${escapeHtml(r.fullTitle)}</strong></a>
           <div class="summary">${escapeHtml(r.summary).slice(0, 240)}${r.summary.length > 240 ? '...' : ''}</div>
         </div>
         <div>${escapeHtml(r.deadlineType)}</div>
