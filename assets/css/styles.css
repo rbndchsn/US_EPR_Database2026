@@ -357,7 +357,7 @@ main {
   box-sizing: border-box;
 }
 .chart-card-full .chart-wrap {
-  height: 520px;
+  height: 360px;
 }
 .chart-card {
   background: var(--color-surface);
