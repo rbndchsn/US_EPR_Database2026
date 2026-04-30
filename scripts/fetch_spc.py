@@ -18,10 +18,12 @@ official UI consumes.
 
 from __future__ import annotations
 
+import concurrent.futures
 import json
 import os
 import re
 import sys
+import urllib.parse
 import urllib.request
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
@@ -56,9 +58,46 @@ def discover_build_id():
     return match.group(1)
 
 
-def fetch_export(build_id):
-    url = f"{SPC_HOST}/_next/data/{build_id}/en-US/policies/export.json"
+def fetch_index(build_id):
+    """The index endpoint returns the 100 bills SPC's homepage shows.
+
+    These records carry summary metadata only (no provision text), so we use
+    them to enumerate bill IDs and then hit per-bill endpoints in parallel.
+    """
+    url = f"{SPC_HOST}/_next/data/{build_id}/en-US/policies.json"
     return json.loads(http_get(url))
+
+
+def fetch_policy(build_id, version):
+    """Per-bill endpoint returns the full record including all provision fields."""
+    url = f"{SPC_HOST}/_next/data/{build_id}/en-US/policies/{urllib.parse.quote(version)}.json"
+    try:
+        data = json.loads(http_get(url))
+        return data.get("pageProps", {}).get("initPolicy")
+    except Exception as e:
+        print(f"  warning: could not fetch {version}: {e}", file=sys.stderr)
+        return None
+
+
+def fetch_all_policies(build_id, summaries):
+    """Fetch each bill's full record in parallel.  ~100 requests."""
+    versions = [s["version"] for s in summaries if s.get("version")]
+    full_policies = {}
+
+    def worker(v):
+        return v, fetch_policy(build_id, v)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as ex:
+        for version, policy in ex.map(worker, versions):
+            if policy is not None:
+                full_policies[version] = policy
+
+    # Merge: prefer the per-bill record (richer); fall back to summary
+    summary_by_version = {s.get("version"): s for s in summaries if s.get("version")}
+    merged = []
+    for v in versions:
+        merged.append(full_policies.get(v) or summary_by_version[v])
+    return merged
 
 
 # Status normalisation. SPC encodes statuses as "1:Passed", "2:Amended",
@@ -305,10 +344,16 @@ def main():
     print("Discovering SPC build id...")
     build_id = discover_build_id()
     print(f"  build id: {build_id}")
-    print("Fetching export.json...")
-    payload = fetch_export(build_id)
-    raw_policies = payload["pageProps"]["initAllPolicies"]
-    print(f"  fetched {len(raw_policies)} policies")
+
+    print("Fetching policy index...")
+    index_payload = fetch_index(build_id)
+    summaries = index_payload["pageProps"]["initAllPolicies"]
+    app_settings_fields = index_payload["pageProps"]["initAppSettings"]["fields"]
+    print(f"  index has {len(summaries)} policies")
+
+    print("Fetching per-bill detail (parallel)...")
+    raw_policies = fetch_all_policies(build_id, summaries)
+    print(f"  fetched {len(raw_policies)} full policy records")
 
     # Sort newest first so the home "recent" view doesn't need to re-sort
     def policy_sort_key(p):
@@ -316,13 +361,6 @@ def main():
     raw_policies.sort(key=policy_sort_key, reverse=True)
 
     policies = [normalise_policy(p) for p in raw_policies]
-
-    # Need the appSettings.fields data; the export.json doesn't include it,
-    # only the index page does. Fetch policies.json for the metadata.
-    index_payload = json.loads(http_get(
-        f"{SPC_HOST}/_next/data/{build_id}/en-US/policies.json"
-    ))
-    app_settings_fields = index_payload["pageProps"]["initAppSettings"]["fields"]
 
     categories = build_categories_metadata(app_settings_fields, policies)
     aggregates = build_aggregates(policies, categories)

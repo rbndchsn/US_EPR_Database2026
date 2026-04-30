@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Sustainable Packaging Coalition / GreenBlue EPR Policy Database",
     "source_url": "https://epr.sustainablepackaging.org/policies",
-    "fetched_at": "2026-04-30T04:15:18+00:00",
+    "fetched_at": "2026-04-30T04:28:50+00:00",
     "build_id": "ffyn98CbLQOurNXW2C6Cq"
   },
   "categories": [
@@ -25,10 +25,6 @@
         {
           "key": "beverageContainers",
           "title": "Beverage Containers"
-        },
-        {
-          "key": "materialSpecific",
-          "title": "Material Specific"
         }
       ]
     },
@@ -277,20 +273,12 @@
           "title": "Recycled Content Minimums"
         },
         {
-          "key": "mandatoryRecycling",
-          "title": "Mandatory Recycling"
-        },
-        {
-          "key": "landfillSurcharges",
-          "title": "Landfill Surcharges"
-        },
-        {
           "key": "productOrMaterialBans",
           "title": "Product or Material Bans"
         },
         {
-          "key": "payAsYouThrowPolicies",
-          "title": "Pay As You Throw Policies"
+          "key": "mandatoryRecycling",
+          "title": "Mandatory Recycling"
         }
       ]
     },
@@ -353,16 +341,16 @@
       "title": "Social Considerations",
       "options": [
         {
-          "key": "sociallyJustManagement",
-          "title": "Socially Just Management"
-        },
-        {
           "key": "laborRequirements",
           "title": "Labor Requirements"
         },
         {
           "key": "communityOutreach",
           "title": "Community Outreach"
+        },
+        {
+          "key": "sociallyJustManagement",
+          "title": "Socially Just Management"
         }
       ]
     },
@@ -465,14 +453,6 @@
           "title": "Recyclable Categories"
         },
         {
-          "key": "wastePreventionAndReuse",
-          "title": "Waste Prevention and Reuse"
-        },
-        {
-          "key": "alternativeCollectionPrograms",
-          "title": "Alternative Collection Programs"
-        },
-        {
           "key": "specifiesHowRatesAreMeasured",
           "title": "Specifies How Rates Are Measured"
         },
@@ -481,60 +461,44 @@
           "title": "Material Exemption"
         },
         {
-          "key": "wasteAudits",
-          "title": "Waste Audits"
-        },
-        {
-          "key": "labeling",
-          "title": "Labeling"
-        },
-        {
-          "key": "advertiserOption",
-          "title": "Advertiser Option"
-        },
-        {
-          "key": "contamination",
-          "title": "Contamination"
-        },
-        {
-          "key": "processorCommodityRiskFee",
-          "title": "Processor Commodity Risk Fee"
-        },
-        {
-          "key": "receptacleLabeling",
-          "title": "Receptacle Labeling"
-        },
-        {
-          "key": "greenhouseGasAssessments",
-          "title": "Greenhouse Gas Assessments"
-        },
-        {
-          "key": "eprStudy",
-          "title": "Epr Study"
-        },
-        {
-          "key": "advancedRecyclingConsiderations",
-          "title": "Advanced Recycling Considerations"
-        },
-        {
-          "key": "domesticProcessing",
-          "title": "Domestic Processing"
-        },
-        {
-          "key": "lifeCycleEvaluation",
-          "title": "Life Cycle Evaluation"
+          "key": "alternativeCollectionPrograms",
+          "title": "Alternative Collection Programs"
         },
         {
           "key": "reliefFromPreviousRestrictions",
           "title": "Relief From Previous Restrictions"
         },
         {
-          "key": "checkOffProgram",
-          "title": "Check Off Program"
+          "key": "advertiserOption",
+          "title": "Advertiser Option"
         },
         {
-          "key": "virginResinFee",
-          "title": "Virgin Resin Fee"
+          "key": "wastePreventionAndReuse",
+          "title": "Waste Prevention and Reuse"
+        },
+        {
+          "key": "wasteAudits",
+          "title": "Waste Audits"
+        },
+        {
+          "key": "contamination",
+          "title": "Contamination"
+        },
+        {
+          "key": "labeling",
+          "title": "Labeling"
+        },
+        {
+          "key": "processorCommodityRiskFee",
+          "title": "Processor Commodity Risk Fee"
+        },
+        {
+          "key": "advancedRecyclingConsiderations",
+          "title": "Advanced Recycling Considerations"
+        },
+        {
+          "key": "receptacleLabeling",
+          "title": "Receptacle Labeling"
         }
       ]
     }
