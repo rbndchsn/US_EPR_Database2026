@@ -141,9 +141,19 @@
   </section>
 
   <section class="charts">
-    <div class="chart-card chart-card-full">
+    <div class="chart-card">
       <h2>Bills by Status</h2>
       <div class="chart-wrap"><canvas id="chart-status"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>States with Passed Laws</h2>
+      <p class="chart-subtitle">
+        <span data-slot="passed-states-count">0</span> states have at least one passed EPR bill.
+        <span class="dot dot-enacted"></span> Packaging EPR program.
+        <span class="dot dot-other"></span> Other passed law.
+        Auto-updates as new laws are enacted.
+      </p>
+      <div class="chart-wrap"><canvas id="chart-passed-states"></canvas></div>
     </div>
   </section>
 

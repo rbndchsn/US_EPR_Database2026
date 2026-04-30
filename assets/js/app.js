@@ -121,6 +121,27 @@
   // ---------- Routing ----------
 
   function route() {
+    const rawHash = window.location.hash;
+
+    // Same-page anchor (e.g. #enacted-states): scroll to the element if it
+    // exists on the current view; do not re-render. If we're not on the home
+    // view, route to home first, then scroll once the home view renders.
+    if (rawHash && !rawHash.startsWith('#/')) {
+      const id = rawHash.slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      // Element not on the current view: route to home and try again after.
+      window.location.hash = '#/';
+      requestAnimationFrame(() => {
+        const t = document.getElementById(id);
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      return;
+    }
+
     const { path, params } = parseHash();
     const app = document.getElementById('app');
     destroyCharts();
@@ -226,6 +247,7 @@
 
     requestAnimationFrame(() => {
       renderStatusChart();
+      renderPassedStatesChart(root);
       renderUsMap(root);
     });
   }
@@ -246,6 +268,66 @@
         plugins: {
           legend: { position: 'right', labels: { boxWidth: 12, padding: 10 } },
           tooltip: { callbacks: { label: (item) => `${item.label}: ${item.parsed} bills` } },
+        },
+      },
+    });
+  }
+
+  // States that have at least one Passed-status bill in the current dataset.
+  // The list refreshes whenever the data refreshes; new states appear here
+  // automatically as soon as SPC marks a bill as Passed.
+  function renderPassedStatesChart(root) {
+    const passedBills = state.policies.filter(p => p.status === 'Passed');
+    // Group bills by state; track the most recent bill per state for tooltips
+    const byState = new Map();
+    passedBills.forEach(b => {
+      const s = b.locationPrimary;
+      if (!s) return;
+      const prev = byState.get(s);
+      if (!prev || (b.date || '') > (prev.date || '')) byState.set(s, b);
+    });
+
+    const states = Array.from(byState.keys()).sort();
+    const enactedSet = new Set(ENACTED_PACKAGING_EPR.map(e => e.state));
+
+    // Populate the count subtitle on the chart card
+    const countSlot = root.querySelector('[data-slot=passed-states-count]');
+    if (countSlot) countSlot.textContent = states.length;
+
+    const ctx = document.getElementById('chart-passed-states');
+    if (!ctx) return;
+
+    if (!states.length) {
+      ctx.parentElement.innerHTML = '<p style="text-align:center;color:var(--color-text-muted);padding:60px 0">No passed bills yet.</p>';
+      return;
+    }
+
+    // Equal-sized slice per state. Color: dark green for the canonical
+    // packaging EPR states, lighter green for other passed laws.
+    const data = states.map(() => 1);
+    const colors = states.map(s => enactedSet.has(s) ? '#0e6b56' : '#6fb89a');
+    const billLabels = states.map(s => byState.get(s).fullTitle);
+
+    charts.passedStates = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: states,
+        datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'right', labels: { boxWidth: 12, padding: 8, font: { size: 11 } } },
+          tooltip: {
+            callbacks: {
+              label: (item) => {
+                const isCanonical = enactedSet.has(item.label);
+                const tag = isCanonical ? ' (packaging EPR)' : ' (other passed law)';
+                return `${item.label}${tag}: ${billLabels[item.dataIndex]}`;
+              },
+            },
+          },
         },
       },
     });
