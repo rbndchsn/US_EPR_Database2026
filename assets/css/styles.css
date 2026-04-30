@@ -355,8 +355,11 @@ main {
   margin: 32px 0;
 }
 .chart-card-full {
-  max-width: 520px;
+  max-width: 700px;
   margin: 0 auto;
+}
+.chart-card-full .chart-wrap {
+  height: 420px;
 }
 .chart-card {
   background: var(--color-surface);
