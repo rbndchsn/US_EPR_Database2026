@@ -8,6 +8,20 @@
   'use strict';
 
   const STATUS_ORDER = ['Passed', 'Amended', 'In Progress', 'Introduced', 'Failed', 'Unknown'];
+
+  // Canonical seven US states with enacted packaging EPR laws as of 2026,
+  // in chronological order. Each entry references the bill version that we
+  // expect to find in the SPC dataset; the home page panel falls back to
+  // metadata-only display if a bill isn't in the current fetch.
+  const ENACTED_PACKAGING_EPR = [
+    { state: 'Maine',       version: 'LD1541A',      year: 2021, billLabel: 'LD 1541',           note: 'First state to enact packaging EPR' },
+    { state: 'Oregon',      version: 'SB582B',       year: 2021, billLabel: 'SB 582',            note: 'First operational program (July 2025)' },
+    { state: 'Colorado',    version: 'COHB221355RR', year: 2022, billLabel: 'HB 22-1355',        note: '' },
+    { state: 'California',  version: 'SB54CH',       year: 2022, billLabel: 'SB 54',             note: '' },
+    { state: 'Minnesota',   version: 'HF3911',       year: 2024, billLabel: 'HF 3911',           note: '' },
+    { state: 'Maryland',    version: 'SB901C',       year: 2025, billLabel: 'SB 901',            note: '' },
+    { state: 'Washington',  version: 'SB5284C',      year: 2025, billLabel: 'SB 5284',           note: '' },
+  ];
   const STATUS_COLORS = {
     'Passed': '#0e6b56',
     'Amended': '#2a7ad6',
@@ -126,7 +140,17 @@
     const node = el('tpl-home');
     const total = state.policies.length;
     const stateCount = Object.keys(state.aggregates.state_counts).filter(s => s !== 'Unknown').length;
-    const passed = state.aggregates.status_counts.Passed || 0;
+
+    // Most recent year present in the dataset (we want the latest, e.g. 2026)
+    const years = Object.keys(state.aggregates.year_counts).map(y => parseInt(y, 10)).filter(y => !isNaN(y));
+    const currentYear = years.length ? Math.max(...years) : new Date().getFullYear();
+
+    // States that introduced new bills in the current year
+    const introducedCurrentYearStates = new Set(
+      state.policies
+        .filter(p => parseInt(p.year, 10) === currentYear && p.status === 'Introduced' && p.locationPrimary)
+        .map(p => p.locationPrimary)
+    );
 
     let deadlines = 0;
     state.policies.forEach(p => {
@@ -137,9 +161,30 @@
 
     node.querySelector('[data-slot=total-bills]').textContent = total;
     node.querySelector('[data-slot=total-states]').textContent = stateCount;
-    node.querySelector('[data-slot=passed-count]').textContent = passed;
     node.querySelector('[data-slot=all-count]').textContent = total;
     node.querySelector('[data-slot=deadlines-count]').textContent = deadlines;
+    node.querySelector('[data-slot=enacted-states-count]').textContent = ENACTED_PACKAGING_EPR.length;
+    node.querySelector('[data-slot=introduced-current-year-count]').textContent = introducedCurrentYearStates.size;
+    node.querySelector('[data-slot=current-year]').textContent = currentYear;
+
+    // Render the "States with Packaging EPR Laws" grid
+    const grid = node.querySelector('[data-slot=enacted-states-grid]');
+    if (grid) {
+      ENACTED_PACKAGING_EPR.forEach(entry => {
+        const policy = state.policies.find(p => p.version === entry.version);
+        const card = document.createElement('a');
+        card.className = 'state-card';
+        card.href = policy ? `#/bill/${encodeURIComponent(entry.version)}` : '#/browse?status=Passed';
+        const dateText = policy && policy.date ? formatDate(policy.date) : `${entry.year}`;
+        card.innerHTML = `
+          <div class="state-card-state">${escapeHtml(entry.state)}</div>
+          <div class="state-card-bill">${escapeHtml(entry.billLabel)}</div>
+          <div class="state-card-date">${escapeHtml(dateText)}</div>
+          ${entry.note ? `<div class="state-card-note">${escapeHtml(entry.note)}</div>` : ''}
+        `;
+        grid.appendChild(card);
+      });
+    }
 
     if (state.metadata && state.metadata.fetched_at) {
       const slot = node.querySelector('[data-slot=fetched-at]');

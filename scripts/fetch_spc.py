@@ -68,6 +68,23 @@ def fetch_index(build_id):
     return json.loads(http_get(url))
 
 
+def fetch_export(build_id):
+    """SPC's /policies/export endpoint also returns 100 records but a different
+    100 - it preserves older versions and historical entries that the index
+    has rotated out. Union with index gives a fuller dataset."""
+    url = f"{SPC_HOST}/_next/data/{build_id}/en-US/policies/export.json"
+    return json.loads(http_get(url))
+
+
+# Bills we always want included even if SPC's index/export rotates them out.
+# These are the canonical packaging EPR laws from the well-known 7-state list.
+# Without this supplement, Maine and Oregon don't appear in either endpoint.
+CANONICAL_BILL_IDS = [
+    "LD1541A",   # Maine 2021 (the 1st state EPR for packaging law)
+    "SB582B",    # Oregon 2021
+]
+
+
 def fetch_policy(build_id, version):
     """Per-bill endpoint returns the full record including all provision fields."""
     url = f"{SPC_HOST}/_next/data/{build_id}/en-US/policies/{urllib.parse.quote(version)}.json"
@@ -347,9 +364,26 @@ def main():
 
     print("Fetching policy index...")
     index_payload = fetch_index(build_id)
-    summaries = index_payload["pageProps"]["initAllPolicies"]
+    index_summaries = index_payload["pageProps"]["initAllPolicies"]
     app_settings_fields = index_payload["pageProps"]["initAppSettings"]["fields"]
-    print(f"  index has {len(summaries)} policies")
+    print(f"  index has {len(index_summaries)} policies")
+
+    print("Fetching policy export...")
+    export_payload = fetch_export(build_id)
+    export_summaries = export_payload["pageProps"]["initAllPolicies"]
+    print(f"  export has {len(export_summaries)} policies")
+
+    # Union the two endpoints by version. Add canonical supplements.
+    seen = {}
+    for s in index_summaries + export_summaries:
+        v = s.get("version")
+        if v and v not in seen:
+            seen[v] = s
+    for v in CANONICAL_BILL_IDS:
+        if v not in seen:
+            seen[v] = {"version": v}
+    summaries = list(seen.values())
+    print(f"  union (with supplements): {len(summaries)} unique bill IDs")
 
     print("Fetching per-bill detail (parallel)...")
     raw_policies = fetch_all_policies(build_id, summaries)

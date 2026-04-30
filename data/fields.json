@@ -2,7 +2,7 @@
   "metadata": {
     "source": "Sustainable Packaging Coalition / GreenBlue EPR Policy Database",
     "source_url": "https://epr.sustainablepackaging.org/policies",
-    "fetched_at": "2026-04-30T04:28:50+00:00",
+    "fetched_at": "2026-04-30T04:42:04+00:00",
     "build_id": "ffyn98CbLQOurNXW2C6Cq"
   },
   "categories": [
@@ -25,6 +25,10 @@
         {
           "key": "beverageContainers",
           "title": "Beverage Containers"
+        },
+        {
+          "key": "materialSpecific",
+          "title": "Material Specific"
         }
       ]
     },
@@ -279,6 +283,14 @@
         {
           "key": "mandatoryRecycling",
           "title": "Mandatory Recycling"
+        },
+        {
+          "key": "landfillSurcharges",
+          "title": "Landfill Surcharges"
+        },
+        {
+          "key": "payAsYouThrowPolicies",
+          "title": "Pay As You Throw Policies"
         }
       ]
     },
@@ -499,6 +511,30 @@
         {
           "key": "receptacleLabeling",
           "title": "Receptacle Labeling"
+        },
+        {
+          "key": "greenhouseGasAssessments",
+          "title": "Greenhouse Gas Assessments"
+        },
+        {
+          "key": "eprStudy",
+          "title": "Epr Study"
+        },
+        {
+          "key": "domesticProcessing",
+          "title": "Domestic Processing"
+        },
+        {
+          "key": "lifeCycleEvaluation",
+          "title": "Life Cycle Evaluation"
+        },
+        {
+          "key": "checkOffProgram",
+          "title": "Check Off Program"
+        },
+        {
+          "key": "virginResinFee",
+          "title": "Virgin Resin Fee"
         }
       ]
     }

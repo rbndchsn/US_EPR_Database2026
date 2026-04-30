@@ -78,29 +78,38 @@
   </section>
 
   <section class="quick-tiles">
-    <a class="tile tile-passed" href="#/browse?status=Passed">
-      <span class="tile-count" data-slot="passed-count"></span>
-      <span class="tile-label">Passed Laws</span>
+    <a class="tile tile-passed" href="#enacted-states">
+      <span class="tile-count" data-slot="enacted-states-count">7</span>
+      <span class="tile-label">States with Packaging EPR Laws</span>
     </a>
     <a class="tile" href="#/browse">
       <span class="tile-count" data-slot="all-count"></span>
       <span class="tile-label">All Bills Tracked</span>
     </a>
+    <a class="tile" href="#/browse?status=Introduced">
+      <span class="tile-count" data-slot="introduced-current-year-count"></span>
+      <span class="tile-label">States with <span data-slot="current-year">2026</span> Bills Introduced</span>
+    </a>
     <a class="tile" href="#/deadlines">
       <span class="tile-count" data-slot="deadlines-count"></span>
       <span class="tile-label">Compliance Deadlines</span>
     </a>
-    <a class="tile" href="#/about">
-      <span class="tile-count">17</span>
-      <span class="tile-label">Policy Elements Tracked</span>
-    </a>
+  </section>
+
+  <section id="enacted-states" class="enacted-states">
+    <h2>7 States with Packaging EPR Laws</h2>
+    <p class="meta">
+      Seven US states have enacted Extended Producer Responsibility laws specifically for packaging.
+      Click any state to see the full bill detail.
+    </p>
+    <div class="state-grid" data-slot="enacted-states-grid"></div>
   </section>
 
   <p class="scope-note">
-    Counts mirror the live SPC database. "Passed Laws" counts only bills with a current status of
-    "Passed". Earlier amendment versions of the same state program are tracked separately under
-    "Amended". A bill's count therefore reflects legislative activity, not the number of unique
-    state programs.
+    The "Passed Laws" count on SPC's homepage equals the count of unique state packaging EPR
+    programs (currently 7). Browsing by status will show additional bills with "Passed" status
+    (Maryland's earlier 2023 law, plus narrower state laws like Connecticut's beverage container
+    minimum recycled content requirement) that are not core packaging EPR programs.
   </p>
 
   <section class="charts">
