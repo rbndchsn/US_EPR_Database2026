@@ -112,14 +112,24 @@
     minimum recycled content requirement) that are not core packaging EPR programs.
   </p>
 
+  <section class="map-section">
+    <h2>EPR Activity by State</h2>
+    <div class="map-legend">
+      <span class="legend-item"><span class="legend-swatch state-enacted"></span>Packaging EPR law enacted</span>
+      <span class="legend-item"><span class="legend-swatch state-passed"></span>Other passed law</span>
+      <span class="legend-item"><span class="legend-swatch state-amended"></span>Amendments in progress</span>
+      <span class="legend-item"><span class="legend-swatch state-introduced"></span>Bills introduced</span>
+      <span class="legend-item"><span class="legend-swatch state-failed"></span>Only failed bills</span>
+      <span class="legend-item"><span class="legend-swatch state-none"></span>No EPR activity</span>
+    </div>
+    <div class="map-wrap" data-slot="map-host"></div>
+    <div class="map-tooltip" data-slot="map-tooltip" role="tooltip" aria-hidden="true"></div>
+  </section>
+
   <section class="charts">
-    <div class="chart-card">
+    <div class="chart-card chart-card-full">
       <h2>Bills by Status</h2>
       <div class="chart-wrap"><canvas id="chart-status"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <h2>Bills by State</h2>
-      <div class="chart-wrap"><canvas id="chart-state"></canvas></div>
     </div>
   </section>
 
@@ -177,6 +187,22 @@
 
     <h3>Elements tracked</h3>
     <div data-slot="elements-list"></div>
+
+    <h2>How this tracker was built</h2>
+    <p>
+      This site is a static web application hosted on GitHub Pages. The data refreshes itself
+      daily by pulling directly from the Sustainable Packaging Coalition's public source, with
+      no manual export step in the loop. Both the code and the automation behind the scenes
+      were developed collaboratively with an AI assistant, which made it feasible to ship a
+      working tool in days rather than weeks.
+    </p>
+    <ul class="build-list">
+      <li><strong>Frontend.</strong> Plain HTML, CSS, and JavaScript with Chart.js for the status pie. The US map is a public-domain inline SVG colored by JavaScript. No framework, no build step.</li>
+      <li><strong>Data pipeline.</strong> A Python script (standard library only, no third-party dependencies) fetches the live dataset directly from the Sustainable Packaging Coalition's public web data endpoints and emits three JSON files the site reads at load.</li>
+      <li><strong>Hosting and automation.</strong> GitHub Pages serves the site. A GitHub Actions workflow runs the fetcher daily at 06:00 UTC, commits the refreshed data, and redeploys. New SPC entries appear here within 24 hours with no manual step.</li>
+      <li><strong>AI-assisted development.</strong> Built with Anthropic's Claude as a collaborator. AI was used to scrape and reverse-engineer SPC's undocumented data endpoints, write and debug the Python fetcher and frontend code, integrate the US states SVG, automate the daily refresh and deploy pipeline, and resolve parsing edge cases. Human role: scoping, validation, and final review.</li>
+      <li><strong>Tech stack:</strong> Python (stdlib), HTML, CSS, vanilla JavaScript, Chart.js, inline SVG, GitHub Pages, GitHub Actions.</li>
+    </ul>
   </article>
 </template>
 

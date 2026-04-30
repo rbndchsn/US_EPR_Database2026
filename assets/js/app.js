@@ -9,6 +9,19 @@
 
   const STATUS_ORDER = ['Passed', 'Amended', 'In Progress', 'Introduced', 'Failed', 'Unknown'];
 
+  const STATE_NAME_TO_CODE = {
+    'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+    'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+    'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA',
+    'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD',
+    'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO',
+    'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ',
+    'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH',
+    'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC',
+    'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT',
+    'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY',
+  };
+
   // Canonical seven US states with enacted packaging EPR laws as of 2026,
   // in chronological order. Each entry references the bill version that we
   // expect to find in the SPC dataset; the home page panel falls back to
@@ -213,7 +226,7 @@
 
     requestAnimationFrame(() => {
       renderStatusChart();
-      renderStateChart();
+      renderUsMap(root);
     });
   }
 
@@ -238,33 +251,122 @@
     });
   }
 
-  function renderStateChart() {
-    const counts = state.aggregates.state_counts;
-    const entries = Object.entries(counts)
-      .filter(([k]) => k !== 'Unknown')
-      .sort((a, b) => b[1] - a[1]);
-    const top = entries.slice(0, 9);
-    const otherSum = entries.slice(9).reduce((s, x) => s + x[1], 0);
-    const labels = top.map(x => x[0]);
-    const data = top.map(x => x[1]);
-    if (otherSum) {
-      labels.push('Other');
-      data.push(otherSum);
+  // Strongest legislative outcome per state, used to color-code the map.
+  // Priority order: enacted (canonical 7) > passed > amended > introduced > failed > none.
+  function classifyStateOutcome(stateName) {
+    const enactedStates = new Set(ENACTED_PACKAGING_EPR.map(e => e.state));
+    if (enactedStates.has(stateName)) return 'enacted';
+    const bills = state.policies.filter(p => p.locationPrimary === stateName);
+    if (!bills.length) return 'none';
+    if (bills.some(b => b.status === 'Passed')) return 'passed';
+    if (bills.some(b => b.status === 'Amended')) return 'amended';
+    if (bills.some(b => b.status === 'Introduced')) return 'introduced';
+    if (bills.some(b => b.status === 'Failed')) return 'failed';
+    return 'none';
+  }
+
+  function summarizeStateForTooltip(stateName) {
+    const bills = state.policies.filter(p => p.locationPrimary === stateName);
+    const counts = { Passed: 0, Amended: 0, Introduced: 0, Failed: 0 };
+    bills.forEach(b => {
+      if (counts.hasOwnProperty(b.status)) counts[b.status] += 1;
+    });
+    const enacted = ENACTED_PACKAGING_EPR.find(e => e.state === stateName);
+    const lines = [];
+    if (enacted) {
+      lines.push(`<strong>${stateName}</strong>`);
+      lines.push(`Packaging EPR law: ${enacted.billLabel} (${enacted.year})`);
+    } else if (bills.length) {
+      lines.push(`<strong>${stateName}</strong>`);
+    } else {
+      lines.push(`<strong>${stateName}</strong>`);
+      lines.push('No EPR bills tracked');
+      return lines.join('<br>');
     }
-    const palette = ['#0e6b56', '#2a7ad6', '#b88200', '#a13a3a', '#6b4ec5', '#136f63', '#1c637e', '#8a5b00', '#7d2a3a', '#9aa0a8'];
-    const ctx = document.getElementById('chart-state');
-    if (!ctx) return;
-    charts.state = new Chart(ctx, {
-      type: 'pie',
-      data: { labels, datasets: [{ data, backgroundColor: palette, borderWidth: 2, borderColor: '#fff' }] },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { position: 'right', labels: { boxWidth: 12, padding: 8, font: { size: 11 } } },
-          tooltip: { callbacks: { label: (item) => `${item.label}: ${item.parsed} bills` } },
-        },
-      },
+    const breakdown = ['Passed', 'Amended', 'Introduced', 'Failed']
+      .filter(k => counts[k] > 0)
+      .map(k => `${counts[k]} ${k}`)
+      .join(', ');
+    if (breakdown) lines.push(breakdown);
+    return lines.join('<br>');
+  }
+
+  async function renderUsMap(scope) {
+    const host = scope.querySelector('[data-slot=map-host]');
+    const tooltip = scope.querySelector('[data-slot=map-tooltip]');
+    if (!host) return;
+
+    let svgText;
+    try {
+      const resp = await fetch('assets/us-map.svg', { cache: 'force-cache' });
+      svgText = await resp.text();
+    } catch (e) {
+      host.innerHTML = '<p style="color:var(--color-text-muted);text-align:center">Map could not load.</p>';
+      return;
+    }
+    host.innerHTML = svgText;
+
+    const svg = host.querySelector('svg');
+    if (!svg) return;
+    svg.classList.add('us-map');
+
+    // Color each state by its strongest legislative outcome
+    Object.entries(STATE_NAME_TO_CODE).forEach(([name, code]) => {
+      const path = svg.querySelector('#' + code);
+      if (!path) return;
+      const cls = 'state-' + classifyStateOutcome(name);
+      path.classList.add(cls);
+      path.setAttribute('data-state', name);
+      path.setAttribute('tabindex', '0');
+      path.setAttribute('role', 'button');
+      path.setAttribute('aria-label', name);
+    });
+
+    // Hover / focus tooltip
+    function showTooltip(targetEl, evt) {
+      const name = targetEl.getAttribute('data-state');
+      if (!name) return;
+      tooltip.innerHTML = summarizeStateForTooltip(name);
+      tooltip.setAttribute('aria-hidden', 'false');
+      tooltip.style.display = 'block';
+      const hostRect = host.getBoundingClientRect();
+      const x = (evt && evt.clientX !== undefined) ? evt.clientX - hostRect.left : 0;
+      const y = (evt && evt.clientY !== undefined) ? evt.clientY - hostRect.top : 0;
+      tooltip.style.left = (x + 14) + 'px';
+      tooltip.style.top = (y + 14) + 'px';
+    }
+    function hideTooltip() {
+      tooltip.setAttribute('aria-hidden', 'true');
+      tooltip.style.display = 'none';
+    }
+
+    svg.addEventListener('mousemove', (e) => {
+      const path = e.target.closest('path[data-state]');
+      if (path) showTooltip(path, e);
+      else hideTooltip();
+    });
+    svg.addEventListener('mouseleave', hideTooltip);
+
+    svg.addEventListener('click', (e) => {
+      const path = e.target.closest('path[data-state]');
+      if (!path) return;
+      const name = path.getAttribute('data-state');
+      const bills = state.policies.filter(p => p.locationPrimary === name);
+      if (bills.length) {
+        // Persist the filter choice and navigate
+        state.stateFilter = name;
+        state.statusFilter.clear();
+        window.location.hash = '#/browse';
+      }
+    });
+
+    svg.addEventListener('keydown', (e) => {
+      const path = e.target.closest('path[data-state]');
+      if (!path) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        path.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      }
     });
   }
 
