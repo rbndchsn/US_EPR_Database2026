@@ -153,9 +153,13 @@
     } else if (path === '/about') {
       renderAbout(app);
     } else if (path === '/browse') {
-      if (params.has('status')) {
-        state.statusFilter = new Set(params.getAll('status'));
-      }
+      // URL params are the source of truth for filters. Anything not in the
+      // URL resets to empty so that a filter from a previous browse call
+      // doesn't bleed into a new one.
+      state.statusFilter = new Set(params.getAll('status'));
+      state.yearFilter = params.get('year') || '';
+      state.stateFilter = params.get('state') || '';
+      // Search query is interactive, not URL-driven, so leave it alone.
       renderBrowse(app);
     } else if (path === '/deadlines') {
       renderDeadlines(app);
@@ -200,6 +204,11 @@
     node.querySelector('[data-slot=enacted-states-count]').textContent = ENACTED_PACKAGING_EPR.length;
     node.querySelector('[data-slot=introduced-current-year-count]').textContent = introducedCurrentYearStates.size;
     node.querySelector('[data-slot=current-year]').textContent = currentYear;
+
+    // Make the "Bills introduced this year" tile link to a filter that
+    // matches the count: status=Introduced AND year=<latest year>
+    const introLink = node.querySelector('[data-slot=introduced-current-year-link]');
+    if (introLink) introLink.setAttribute('href', `#/browse?status=Introduced&year=${currentYear}`);
 
     // Render the "States with Packaging EPR Laws" grid
     const grid = node.querySelector('[data-slot=enacted-states-grid]');
