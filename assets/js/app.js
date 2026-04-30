@@ -404,9 +404,7 @@
 
     const sourceLine = node.querySelector('[data-slot=source-line]');
     if (bill.source_url) {
-      sourceLine.innerHTML = `Source: <a href="${escapeHtml(bill.source_url)}" target="_blank" rel="noopener">${escapeHtml(bill.source_label || 'View bill text')}</a>`;
-    } else if (bill.source_label) {
-      sourceLine.innerHTML = `Source label: ${escapeHtml(bill.source_label)}`;
+      sourceLine.innerHTML = `Source: <a href="${escapeHtml(bill.source_url)}" target="_blank" rel="noopener">View on SPC</a>`;
     } else {
       sourceLine.style.display = 'none';
     }

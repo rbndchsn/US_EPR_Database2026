@@ -43,7 +43,11 @@ def parse_cell(value):
 
     The source uses bold sub-headings glued to the next sentence, separated by
     blank lines from the prior paragraph (e.g. "...alcohol sales.\\n\\nFixed
-    RateThere must be...").  This heuristic recovers them.
+    RateThere must be...").  When openpyxl flattens rich text, the only signal
+    that the bold heading transitioned to the body is a lowercase letter
+    immediately followed by an uppercase letter with no space between (the
+    ResidentialThe / RateThere / SpacesPublic pattern). The regex enforces that
+    boundary; otherwise the whole part is treated as plain text.
     """
     if value is None:
         return None
@@ -57,8 +61,11 @@ def parse_cell(value):
         part = part.strip()
         if not part:
             continue
+        # Head: title-case phrase up to 80 chars, must end with a lowercase
+        # letter, immediately followed by [A-Z][a-z] (sentence start) with no
+        # intervening space. This rules out title-case mid-sentence words.
         match = re.match(
-            r"^([A-Z][A-Za-z\-/&,\.\' ]{0,80}?)([A-Z][a-z][^A-Z]*.*)$",
+            r"^([A-Z][A-Za-z\-/&,\' ]{0,80}?[a-z])([A-Z][a-z].*)$",
             part,
             re.DOTALL,
         )
@@ -68,7 +75,6 @@ def parse_cell(value):
             if (
                 2 <= len(head) <= 80
                 and head.count(" ") <= 6
-                and "." not in head
                 and not head.endswith(",")
             ):
                 chunks.append({"heading": head, "text": body})
@@ -134,6 +140,16 @@ def load_bills(workbook):
     return bills, labels
 
 
+def canonicalise_url(url):
+    """Rewrite SPC vercel staging URLs to the canonical sustainablepackaging.org domain."""
+    if not url:
+        return url
+    if "epr-frontend" in url and "vercel.app" in url and "/policies/" in url:
+        bill_id = url.split("/policies/")[-1]
+        return f"https://epr.sustainablepackaging.org/policies/{bill_id}"
+    return url
+
+
 def load_source_urls(workbook):
     """Extract real hyperlinks from the Source URL column where present."""
     sheet = workbook["All Bills"]
@@ -142,7 +158,7 @@ def load_source_urls(workbook):
         bill_id = sheet.cell(row=r, column=1).value
         cell = sheet.cell(row=r, column=7)
         if cell.hyperlink and bill_id:
-            urls[bill_id] = cell.hyperlink.target
+            urls[bill_id] = canonicalise_url(cell.hyperlink.target)
     return urls
 
 
