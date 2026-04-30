@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>US EPR Policy Tracker</title>
+<meta name="description" content="Browse and explore Extended Producer Responsibility (EPR) packaging legislation across US states. 100 bills, 20 states, sourced from the Sustainable Packaging Coalition." />
+<link rel="stylesheet" href="assets/css/styles.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+<script src="assets/js/app.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="#/" aria-label="US EPR Policy Tracker home">
+      <span class="brand-mark">EPR</span>
+      <span class="brand-text">US EPR Policy Tracker</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#/">Home</a>
+      <a href="#/browse">Browse Bills</a>
+      <a href="#/deadlines">Deadlines</a>
+      <a href="#/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app" class="container" tabindex="-1">
+  <p class="loading">Loading data...</p>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      Data source: <a href="https://epr.sustainablepackaging.org/policies" target="_blank" rel="noopener">Sustainable Packaging Coalition / GreenBlue EPR Policy Database</a>.
+      Last refresh: February 2026.
+    </p>
+    <p class="footer-note">
+      This is a static reference tool. For binding legal advice consult counsel.
+    </p>
+  </div>
+</footer>
+
+<template id="tpl-home">
+  <section class="hero">
+    <h1>US EPR Policy Tracker</h1>
+    <p class="lede">
+      Extended Producer Responsibility legislation for packaging across the United States.
+      Browse <strong data-slot="total-bills"></strong> bills tracked across <strong data-slot="total-states"></strong> states.
+    </p>
+    <p class="meta">Last updated February 2026.</p>
+  </section>
+
+  <section class="quick-tiles">
+    <a class="tile tile-passed" href="#/browse?status=Passed&status=Amended">
+      <span class="tile-count" data-slot="passed-count"></span>
+      <span class="tile-label">Passed and Amended Laws</span>
+    </a>
+    <a class="tile" href="#/browse">
+      <span class="tile-count" data-slot="all-count"></span>
+      <span class="tile-label">All Bills Tracked</span>
+    </a>
+    <a class="tile" href="#/deadlines">
+      <span class="tile-count" data-slot="deadlines-count"></span>
+      <span class="tile-label">Compliance Deadlines</span>
+    </a>
+    <a class="tile" href="#/about">
+      <span class="tile-count">17</span>
+      <span class="tile-label">Policy Elements Tracked</span>
+    </a>
+  </section>
+
+  <section class="charts">
+    <div class="chart-card">
+      <h2>Bills by Status</h2>
+      <div class="chart-wrap"><canvas id="chart-status"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h2>Bills by State</h2>
+      <div class="chart-wrap"><canvas id="chart-state"></canvas></div>
+    </div>
+  </section>
+
+  <section class="recent">
+    <h2>Recently Passed and Amended</h2>
+    <div data-slot="recent-list"></div>
+  </section>
+</template>
+
+<template id="tpl-about">
+  <article class="prose">
+    <h1>About this Tracker</h1>
+    <p>
+      This tracker presents United States packaging Extended Producer Responsibility (EPR) bills and laws,
+      based on the <a href="https://epr.sustainablepackaging.org/policies" target="_blank" rel="noopener">Sustainable Packaging Coalition / GreenBlue EPR Policy Database</a>.
+      Data was last refreshed in February 2026.
+    </p>
+
+    <h2>What is EPR?</h2>
+    <p>
+      Extended Producer Responsibility (EPR) is a policy approach that assigns producers responsibility for the end-of-life of products.
+      This can include both financial responsibility and operational responsibility, though the amount and type may differ.
+      Producers are required to provide funding and/or services that assist in managing covered products after the use phase.
+    </p>
+    <p>
+      Most EPR programs for packaging encourage or require producers of packaging products to join a collective producer responsibility organization (PRO),
+      though many allow producers to comply individually. The PRO then develops a producer responsibility plan and manages the producer responsibility program.
+      In some states, these components are referred to as a stewardship organization and stewardship plan. PROs are typically required to be nonprofit organizations,
+      and a common approach is to allow for multiple PROs to operate within a single region's EPR program.
+    </p>
+    <p>
+      The financial structure may vary, but in most EPR programs producers pay fees to the PRO. The PRO then distributes the funds to cover the costs required by program legislation.
+      Costs generally provide funding for the end-of-life management of covered products (collection, sortation, processing). Covered products are either defined in legislation or in the producer responsibility plan,
+      and are the specific items or materials that must be managed within the program.
+    </p>
+    <p>
+      Many new bills and positions extend cost coverage to include outreach and education, infrastructure improvements, and end-market development for recycled materials.
+      Organizations and policymakers are increasingly pointing to effective EPR as a necessary component of a comprehensive approach to addressing recycling challenges and concern over single-use product pollution.
+    </p>
+
+    <h2>Elements of EPR</h2>
+    <p>
+      The breakdown below identifies key elements and the options within those elements that are present in various approaches.
+      Each element is a key component of the policy, and the options within each element represent common ways that the element is implemented.
+    </p>
+    <p>
+      For example, the element <strong>Covered Products</strong> refers to the types of items required to be included within the producer responsibility program.
+      Within that element are different options, such as <strong>All Packaging Types</strong> or <strong>Paper Products</strong>.
+      The actual scope of these options varies by bill and is explained in more detail on each individual bill page.
+    </p>
+    <p>
+      Some options are either/or, but most elements include multiple options together. The absence of an option within a category does not mean the program will not include that component,
+      only that it was not included in the bill language. Many EPR proposals specify what should be included in the plan, but the details are left to be determined during plan development by the PRO.
+    </p>
+
+    <h3>The 17 Elements Tracked</h3>
+    <div data-slot="elements-list"></div>
+  </article>
+</template>
+
+<template id="tpl-browse">
+  <section class="browse-head">
+    <h1>Browse Bills</h1>
+    <p class="meta"><span data-slot="result-count"></span> matching bills</p>
+  </section>
+
+  <aside class="filters" aria-label="Filters">
+    <div class="filter-group">
+      <h3>Status</h3>
+      <div class="chips" data-slot="status-chips"></div>
+    </div>
+    <div class="filter-group">
+      <h3>State</h3>
+      <select data-slot="state-filter">
+        <option value="">All states</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <h3>Year</h3>
+      <select data-slot="year-filter">
+        <option value="">All years</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <h3>Search</h3>
+      <input type="search" data-slot="search-input" placeholder="Bill name, state, ID..." />
+    </div>
+    <button class="reset-btn" data-slot="reset">Reset filters</button>
+  </aside>
+
+  <div class="results" data-slot="results"></div>
+</template>
+
+<template id="tpl-bill">
+  <a class="back-link" href="#/browse">&larr; Back to all bills</a>
+  <article class="bill-detail">
+    <header class="bill-header">
+      <p class="bill-eyebrow"><span data-slot="state"></span> &bull; <span data-slot="year"></span></p>
+      <h1 data-slot="name"></h1>
+      <p class="bill-id">Bill ID: <span data-slot="id"></span></p>
+      <p class="bill-status">
+        Status: <span class="status-badge" data-slot="status-badge"></span>
+      </p>
+      <p class="bill-source" data-slot="source-line"></p>
+    </header>
+
+    <section class="compliance-snapshot" data-slot="compliance">
+      <h2>Compliance Snapshot</h2>
+      <div data-slot="compliance-body"></div>
+    </section>
+
+    <section class="provisions" data-slot="provisions"></section>
+  </article>
+</template>
+
+<template id="tpl-deadlines">
+  <section class="browse-head">
+    <h1>Compliance Deadlines</h1>
+    <p class="meta">Registration, plan submission, and implementation dates from passed and amended laws.</p>
+  </section>
+  <div class="filter-row">
+    <label><input type="checkbox" data-slot="filter-passed" checked /> Passed and amended laws only</label>
+  </div>
+  <div class="results" data-slot="deadlines-table"></div>
+</template>
+
+<template id="tpl-not-found">
+  <section class="prose">
+    <h1>Page not found</h1>
+    <p>The page you requested doesn't exist. <a href="#/">Return home</a>.</p>
+  </section>
+</template>
+</body>
+</html>
