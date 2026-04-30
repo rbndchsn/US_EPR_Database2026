@@ -134,12 +134,13 @@
     const totals = state.aggregates;
     const total = state.bills.length;
     const stateCount = Object.keys(totals.state_counts).filter(s => s !== 'Unknown').length;
-    const passed = (totals.status_counts.Passed || 0) + (totals.status_counts.Amended || 0);
-    const deadlines = state.bills.filter(b => {
-      if (b.status !== 'Passed' && b.status !== 'Amended') return false;
+    const passed = totals.status_counts.Passed || 0;
+    let deadlines = 0;
+    state.bills.forEach(b => {
+      if (b.status !== 'Passed' && b.status !== 'Amended') return;
       const t = b.provisions['Timeline'];
-      return t && Object.keys(t).length > 0;
-    }).length;
+      if (t) deadlines += Object.keys(t).length;
+    });
 
     node.querySelector('[data-slot=total-bills]').textContent = total;
     node.querySelector('[data-slot=total-states]').textContent = stateCount;
