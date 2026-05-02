@@ -1037,3 +1037,38 @@ mark.verif-search-hit {
   font-size: 1.4rem; cursor: pointer; padding: 0; line-height: 1;
 }
 .verif-popover p { font-size: 0.85rem; margin: 4px 0; line-height: 1.5; }
+
+
+/* Active development badge (right-aligned, gentle pulse) */
+.dev-badge-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+.dev-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #e6f0fb;
+  color: #1d4ed8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.dev-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2563eb;
+  animation: dev-pulse 2s ease-in-out infinite;
+}
+@keyframes dev-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dev-dot { animation: none; opacity: 1; }
+}
