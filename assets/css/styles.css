@@ -1072,3 +1072,10 @@ mark.verif-search-hit {
 @media (prefers-reduced-motion: reduce) {
   .dev-dot { animation: none; opacity: 1; }
 }
+
+
+/* Hero "Browse..." lines in tracker accent green */
+.hero .lede.lede-accent,
+.hero .lede.lede-accent strong {
+  color: var(--color-accent);
+}
