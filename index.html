@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>US EPR Policy Tracker</title>
+<title>US EPR Policy & EU Verification Compliance Tracker</title>
 <meta name="description" content="Browse and explore Extended Producer Responsibility (EPR) packaging legislation across US states. 100 bills, 20 states, sourced from the Sustainable Packaging Coalition." />
 <link rel="stylesheet" href="assets/css/styles.css" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
@@ -12,14 +12,15 @@
 <body>
 <header class="site-header">
   <div class="container">
-    <a class="brand" href="#/" aria-label="US EPR Policy Tracker home">
+    <a class="brand" href="#/" aria-label="US EPR Policy and EU Verification Compliance Tracker home">
       <span class="brand-mark">EPR</span>
-      <span class="brand-text">US EPR Policy Tracker</span>
+      <span class="brand-text">US EPR Policy &amp; EU Verification Compliance Tracker</span>
     </a>
     <nav class="site-nav" aria-label="Primary">
       <a href="#/">Home</a>
-      <a href="#/browse">Browse Bills</a>
-      <a href="#/deadlines">Deadlines</a>
+      <a href="#/browse">Browse US Bills</a>
+      <a href="#/deadlines">US Deadlines</a>
+      <a href="#/verification">EU Verification Requirements</a>
       <a href="#/about">About</a>
     </nav>
   </div>
@@ -32,18 +33,21 @@
 <footer class="site-footer">
   <div class="container">
     <p>
-      Data source: <a href="https://epr.sustainablepackaging.org/policies" target="_blank" rel="noopener">Sustainable Packaging Coalition / GreenBlue EPR Policy Database</a>.
+      Data sources: EU PPWR (<a href="https://eur-lex.europa.eu/eli/reg/2025/40/oj" target="_blank" rel="noopener">Regulation (EU) 2025/40</a>) and <a href="https://epr.sustainablepackaging.org/policies" target="_blank" rel="noopener">Sustainable Packaging Coalition / GreenBlue EPR Policy Database</a>.
       Last refresh: February 2026.
     </p>
     <p class="footer-note">
       This is a static reference tool. For binding legal advice consult counsel.
+    </p>
+    <p class="footer-note">
+      AI-Assisted.
     </p>
   </div>
 </footer>
 
 <template id="tpl-home">
   <section class="hero">
-    <h1>US EPR Policy Tracker</h1>
+    <h1>US EPR Policy &amp; EU Verification Compliance Tracker</h1>
     <p class="lede">
       Extended Producer Responsibility legislation for packaging across the United States.
       Browse <strong data-slot="total-bills"></strong> bills tracked across <strong data-slot="total-states"></strong> states.
@@ -61,11 +65,10 @@
       fees to fund collection, sortation, processing, and recycled-market development for covered packaging.
     </p>
     <p>
-      The model is not new. The European Union has applied EPR to packaging since the 1990s and is
-      now implementing the Packaging and Packaging Waste Regulation (PPWR), which standardizes EPR
-      fees, recyclability rules, and recycled content targets across 27 member states. India enacted
-      national EPR rules for plastic packaging in 2022. Similar programs are live or in development
-      across Canada, Australia, the United Kingdom, Latin America, and parts of Southeast Asia.
+      The European Union has applied EPR to packaging since the 1990s and is now implementing the
+      Packaging and Packaging Waste Regulation (PPWR), which standardizes EPR fees, recyclability
+      rules, and recycled content targets across 27 member states. Verification of compliance will
+      now need to follow <a href="https://eur-lex.europa.eu/eli/reg/2025/40/oj" target="_blank" rel="noopener">Regulation (EU) 2025/40</a>.
     </p>
     <p>
       The United States is now the active frontier. Twenty states have introduced packaging EPR
@@ -74,20 +77,6 @@
       deadlines, fee structures, and compliance windows is a continuous workload. This tracker
       presents the Sustainable Packaging Coalition's EPR Policy Database in a navigable form so
       producers, consultants, and researchers can find the answer to a specific question fast.
-    </p>
-  </section>
-
-  <section class="intro-box">
-    <h2>How this tracker was built</h2>
-    <p>
-      This site is a static web application hosted on GitHub Pages. The data refreshes itself
-      daily by pulling directly from the Sustainable Packaging Coalition's public source, with
-      no manual export step in the loop. Both the code and the automation behind the scenes
-      were developed collaboratively with an AI assistant, which made it feasible to ship a
-      working tool in days rather than weeks.
-    </p>
-    <p>
-      <a href="#/about" class="intro-box-link">Read the full breakdown of the tech stack and AI-assisted workflow on the About page &rarr;</a>
     </p>
   </section>
 
@@ -161,6 +150,9 @@
       based on the <a href="https://epr.sustainablepackaging.org/policies" target="_blank" rel="noopener">Sustainable Packaging Coalition / GreenBlue EPR Policy Database</a>.
       Data refreshes daily directly from SPC; no manual export step.
     </p>
+    <p>
+      The <a href="#/verification">Verification Requirements</a> view extends the tracker to the European Union's Packaging and Packaging Waste Regulation (Regulation EU 2025/40, "PPWR"). It surfaces every sentence in the regulation that addresses verification, audit, or authorised entities, drawn from three keyword-extracted source JSONs and rendered with topic chips, an Article 3 glossary, and outbound links to EUR-Lex. The extracts were produced using AI agents to read the regulation, organize the relevant sentences into structured JSON, and tag them for filtering. Sentence text is byte-equal to the regulation; topic labels are the only authored field.
+    </p>
 
     <h2>What is EPR?</h2>
     <p>
@@ -201,22 +193,6 @@
 
     <h3>Elements tracked</h3>
     <div data-slot="elements-list"></div>
-
-    <h2>How this tracker was built</h2>
-    <p>
-      This site is a static web application hosted on GitHub Pages. The data refreshes itself
-      daily by pulling directly from the Sustainable Packaging Coalition's public source, with
-      no manual export step in the loop. Both the code and the automation behind the scenes
-      were developed collaboratively with an AI assistant, which made it feasible to ship a
-      working tool in days rather than weeks.
-    </p>
-    <ul class="build-list">
-      <li><strong>Frontend.</strong> Plain HTML, CSS, and JavaScript with Chart.js for the status pie. The US map is a public-domain inline SVG colored by JavaScript. No framework, no build step.</li>
-      <li><strong>Data pipeline.</strong> A Python script (standard library only, no third-party dependencies) fetches the live dataset directly from the Sustainable Packaging Coalition's public web data endpoints and emits three JSON files the site reads at load.</li>
-      <li><strong>Hosting and automation.</strong> GitHub Pages serves the site. A GitHub Actions workflow runs the fetcher daily at 06:00 UTC, commits the refreshed data, and redeploys. New SPC entries appear here within 24 hours with no manual step.</li>
-      <li><strong>AI-assisted development.</strong> Built with Anthropic's Claude as a collaborator. AI was used to scrape and reverse-engineer SPC's undocumented data endpoints, write and debug the Python fetcher and frontend code, integrate the US states SVG, automate the daily refresh and deploy pipeline, and resolve parsing edge cases. Human role: scoping, validation, and final review.</li>
-      <li><strong>Tech stack:</strong> Python (stdlib), HTML, CSS, vanilla JavaScript, Chart.js, inline SVG, GitHub Pages, GitHub Actions.</li>
-    </ul>
   </article>
 </template>
 
@@ -286,6 +262,67 @@
     <label><input type="checkbox" data-slot="filter-passed" checked /> Passed and amended laws only</label>
   </div>
   <div class="results" data-slot="deadlines-table"></div>
+</template>
+
+<template id="tpl-verification">
+  <section class="browse-head">
+    <h1>PPWR Verification Requirements</h1>
+    <p class="meta">Regulation (EU) 2025/40, sentences on verification, audit, and authorised entities. <span data-slot="verif-counter"></span></p>
+  </section>
+
+  <div class="verif-actions">
+    <a class="view-btn" href="https://eur-lex.europa.eu/eli/reg/2025/40/oj" target="_blank" rel="noopener">Open PPWR on EUR-Lex &#8599;</a>
+    <button class="reset-btn" data-slot="verif-glossary-open">Article 3 Glossary</button>
+    <button class="reset-btn" data-slot="verif-about-open">How this view was built</button>
+  </div>
+
+  <div class="verif-layout">
+    <aside class="verif-filters" aria-label="Verification filters">
+      <div class="filter-group">
+        <h3>Search sentence text</h3>
+        <input type="search" data-slot="verif-search" placeholder="Member State, audit, 1 June..." />
+      </div>
+      <div class="filter-group">
+        <h3>Source file</h3>
+        <div class="chips" data-slot="verif-filter-source"></div>
+      </div>
+      <div class="filter-group">
+        <h3>Location type</h3>
+        <div class="chips" data-slot="verif-filter-loctype"></div>
+      </div>
+      <div class="filter-group">
+        <h3>Commission act mention</h3>
+        <div class="chips" data-slot="verif-filter-act"></div>
+      </div>
+      <div class="filter-group">
+        <h3>Topics</h3>
+        <p class="verif-help">Authored topic labels. The only field on this view carrying authoring judgment.</p>
+        <div class="chips" data-slot="verif-filter-chips"></div>
+      </div>
+      <button class="reset-btn" data-slot="verif-reset">Reset filters</button>
+    </aside>
+
+    <div class="verif-main">
+      <section class="verif-list" data-slot="verif-list"></section>
+      <aside class="verif-detail" data-slot="verif-detail">
+        <p class="verif-empty">Select an entry to see the verbatim source sentence, glossary terms, and external links. Use "Read in PPWR" to jump to the regulation.</p>
+      </aside>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-verification-loading">
+  <section class="prose">
+    <h1>PPWR Verification Requirements</h1>
+    <p class="meta">Loading PPWR verification data...</p>
+  </section>
+</template>
+
+<template id="tpl-verification-error">
+  <section class="prose">
+    <h1>PPWR Verification Requirements</h1>
+    <p>Could not load <code>data/ppwr_verification.json</code>. <span data-slot="verif-error-msg"></span></p>
+  </section>
 </template>
 
 <template id="tpl-not-found">

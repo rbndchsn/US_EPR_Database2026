@@ -1,0 +1,2211 @@
+{
+  "schema_version": "1.0",
+  "build_date": "2026-05-01",
+  "regulation": "Regulation (EU) 2025/40 of the European Parliament and of the Council of 19 December 2024 on packaging and packaging waste",
+  "source_files": [
+    "verif_sentences.json",
+    "audit_sentences.json",
+    "authorised_sentences.json"
+  ],
+  "regulation_source_md": "/epr/EU_PPWR_Packaging and Packaging Waste Regulation_2025_cleanfinal.md",
+  "fields": {
+    "id": "Stable identifier; prefix VERIF/AUDIT/AUTH from origin JSON, three-digit zero-padded number",
+    "source_file": "Origin JSON: verif | audit | authorised",
+    "search_term": "Original keyword used to extract the JSON",
+    "location_type": "whereas (recital) | article | annex | heading | footnote",
+    "location": "Numeric or roman-numeral identifier (e.g., '7', 'IX', '49')",
+    "sub_location": "Specific paragraph/sentence pointer within the location, verbatim from JSON; null if not present",
+    "sentence": "Full source sentence text, byte-equal to source JSON",
+    "act_type_in_sentence": "Tags from literal phrase match: implementing_act | delegated_act | implementing_powers (only if literal phrase present)",
+    "external_refs": "EU instruments cited in the sentence, with EUR-Lex ELI URLs constructed by formula",
+    "glossary_terms_in_sentence": "Article 3 defined terms whose name appears in the sentence (string-match, word-boundary)",
+    "chips": "Topic chip labels assigned during authoring pass (Robin to review)"
+  },
+  "chip_vocabulary": [
+    "Recycled content",
+    "Compostable packaging",
+    "Authorised representative (general)",
+    "Distributor verification",
+    "Conformity assessment",
+    "Producer registration",
+    "Annual reporting",
+    "Cross-border placement",
+    "Producer responsibility organisation",
+    "Audit and certification",
+    "Deposit-return system",
+    "Re-use systems"
+  ],
+  "entries": [
+    {
+      "id": "VERIF-001",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "whereas",
+      "location": "42",
+      "sub_location": null,
+      "sentence": "The fee modulation in such cases should be based on common rules for the calculation and verification of the recycled content contained in such packaging.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Recycled content"
+      ],
+      "glossary_terms_in_sentence": [
+        "Packaging"
+      ]
+    },
+    {
+      "id": "VERIF-002",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "whereas",
+      "location": "43",
+      "sub_location": null,
+      "sentence": "Implementing powers should be conferred on the Commission in order to ensure uniform conditions for the implementation of the rules on calculating and verifying the percentage of recycled content obtained from the recovery of post-consumer plastic waste, calculated per packaging type and format as an average per manufacturing plant and year while taking into consideration the environmental impact of the recycling process, and to establish the format for technical documentation.",
+      "act_type_in_sentence": [
+        "implementing_powers"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Recycled content"
+      ],
+      "glossary_terms_in_sentence": [
+        "consumer",
+        "plastic",
+        "Packaging",
+        "Waste",
+        "Post-consumer plastic waste"
+      ]
+    },
+    {
+      "id": "VERIF-003",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "whereas",
+      "location": "49",
+      "sub_location": null,
+      "sentence": "The methodology for assessing, verifying and certifying, including through third-party audit, the equivalence of the rules applied where recycled content recovered from post-consumer plastic waste is recycled or collected in a third country should ensure a high level of protection of environment and human health, in particular with regard to the level of emissions into the air, water and soil, taking into account the need to ensure that recycling is performed in an environmentally sound manner, the possibility to ensure high-quality recycling, the level of the quality standards for the recycling sector, and the level of resource efficiency.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Recycled content",
+        "Audit and certification"
+      ],
+      "glossary_terms_in_sentence": [
+        "consumer",
+        "plastic",
+        "Waste",
+        "High-quality recycling",
+        "Post-consumer plastic waste"
+      ]
+    },
+    {
+      "id": "VERIF-004",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "whereas",
+      "location": "97",
+      "sub_location": null,
+      "sentence": "To enable the verification of compliance with the re-use targets, it is necessary that the respective economic operators report to the competent authorities.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Re-use systems",
+        "Annual reporting"
+      ],
+      "glossary_terms_in_sentence": [
+        "re-use",
+        "Economic operator"
+      ]
+    },
+    {
+      "id": "VERIF-005",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "whereas",
+      "location": "115",
+      "sub_location": null,
+      "sentence": "In order to monitor and verify compliance of producers and producer responsibility organisations with obligations under extended producer responsibility relating to the collection and treatment of waste from their products, it is necessary that Member States designate one or more competent authorities.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration",
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "Waste",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "VERIF-006",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "whereas",
+      "location": "134",
+      "sub_location": "first sentence containing 'verif'",
+      "sentence": "Therefore, providers of online platforms allowing consumers to conclude distance contracts with producers should make their best efforts to assess whether the information provided by the producers concerned is reliable and complete, in particular by using or verifying freely available official online databases and online interfaces or by requesting the traders concerned to provide trustworthy supporting documents, in accordance with Regulation (EU) 2022/2065.",
+      "act_type_in_sentence": [],
+      "external_refs": [
+        {
+          "citation": "Regulation (EU) 2022/2065",
+          "url": "https://eur-lex.europa.eu/eli/reg/2022/2065/oj",
+          "instrument_type": "reg"
+        }
+      ],
+      "chips": [
+        "Cross-border placement"
+      ],
+      "glossary_terms_in_sentence": [
+        "distance contract",
+        "producer",
+        "consumer",
+        "Online platform"
+      ]
+    },
+    {
+      "id": "VERIF-007",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "whereas",
+      "location": "134",
+      "sub_location": "second sentence containing 'verif'",
+      "sentence": "As far as publicly available data in the register of producers is concerned, 'making best efforts' within the meaning of Article 30(2), first subparagraph, of Regulation (EU) 2022/2065 usually requires the verification of the information provided by the producer with the publicly available data in the register of producers.",
+      "act_type_in_sentence": [],
+      "external_refs": [
+        {
+          "citation": "Regulation (EU) 2022/2065",
+          "url": "https://eur-lex.europa.eu/eli/reg/2022/2065/oj",
+          "instrument_type": "reg"
+        }
+      ],
+      "chips": [
+        "Cross-border placement",
+        "Producer registration"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer"
+      ]
+    },
+    {
+      "id": "VERIF-008",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "whereas",
+      "location": "156",
+      "sub_location": null,
+      "sentence": "When establishing the methodology for the calculation and verification of the percentage of recycled content, the Commission should assess the available recycling technologies, taking into account their economic and environmental performance, including the quality of the output, the availability of the waste, the energy needed and the emissions of greenhouse gases and other relevant environmental impacts.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Recycled content"
+      ],
+      "glossary_terms_in_sentence": [
+        "Waste"
+      ]
+    },
+    {
+      "id": "VERIF-009",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "footnote",
+      "location": "41",
+      "sub_location": null,
+      "sentence": "Commission Implementing Decision (EU) 2019/1004 of 7 June 2019 laying down rules for the calculation, verification and reporting of data on waste in accordance with Directive 2008/98/EC of the European Parliament and of the Council and repealing Commission Implementing Decision C(2012)2384 (OJ L 163, 20.6.2019, p. 66).",
+      "act_type_in_sentence": [],
+      "external_refs": [
+        {
+          "citation": "Directive 2008/98/EC",
+          "url": "https://eur-lex.europa.eu/eli/dir/2008/98/oj",
+          "instrument_type": "dir"
+        },
+        {
+          "citation": "Decision (EU) 2019/1004",
+          "url": "https://eur-lex.europa.eu/eli/dec_impl/2019/1004/oj",
+          "instrument_type": "dec_impl"
+        }
+      ],
+      "chips": [
+        "Annual reporting"
+      ],
+      "glossary_terms_in_sentence": [
+        "Waste"
+      ]
+    },
+    {
+      "id": "VERIF-010",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "whereas",
+      "location": "166",
+      "sub_location": null,
+      "sentence": "In order to ensure uniform conditions for the implementation of the reporting obligations, implementing powers should be conferred on the Commission to establish rules for calculation and verification of data on attainment of the recycling targets, separate collection rates of packaging covered by the deposit and return system, and data necessary for establishing the methodology for the recycled-at-scale assessment.",
+      "act_type_in_sentence": [
+        "implementing_powers"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Annual reporting"
+      ],
+      "glossary_terms_in_sentence": [
+        "deposit",
+        "deposit and return system",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "VERIF-011",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "6",
+      "sub_location": "Article 6(5), point (b), second indent (ii), chain-of-custody bullet",
+      "sentence": "The chain of custody mechanism referred to in point (b) shall be based on at least the following elements: a verification process that allows manufacturers to obtain the necessary data from the downstream operators ensuring that packaging is recycled at scale.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Recycled content"
+      ],
+      "glossary_terms_in_sentence": [
+        "Packaging",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "VERIF-012",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "7",
+      "sub_location": "Article 7(8), first sentence",
+      "sentence": "By 31 December 2026, the Commission shall adopt implementing acts establishing the methodology for the calculation and verification of the percentage of recycled content recovered from post-consumer plastic waste recycled and collected within the Union in accordance with the conditions set out in paragraph 3 of this Article, as well as the format for the technical documentation referred to in Annex VII.",
+      "act_type_in_sentence": [
+        "implementing_act"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Recycled content"
+      ],
+      "glossary_terms_in_sentence": [
+        "consumer",
+        "plastic",
+        "Waste",
+        "Post-consumer plastic waste"
+      ]
+    },
+    {
+      "id": "VERIF-013",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "7",
+      "sub_location": "Article 7(8), second sentence",
+      "sentence": "The verification methodology may include the obligation to carry independent third-party audits on manufacturers of recycled content in the Union and of plastic packaging placed on the market as a sales unit separate from other products, to ensure that the conditions set out in paragraph 3 of this Article and in the delegated act adopted pursuant to paragraph 9 of this Article are met.",
+      "act_type_in_sentence": [
+        "delegated_act"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Recycled content",
+        "Audit and certification"
+      ],
+      "glossary_terms_in_sentence": [
+        "plastic",
+        "Packaging",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "VERIF-014",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "7",
+      "sub_location": "Article 7(10)",
+      "sentence": "By 31 December 2026, the Commission shall adopt implementing acts establishing the methodology for assessing, verifying and certifying, including through third-party audit, the equivalence of the rules applied in cases where the recycled content recovered from post-consumer plastic waste is recycled or collected in a third country.",
+      "act_type_in_sentence": [
+        "implementing_act"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Recycled content",
+        "Audit and certification"
+      ],
+      "glossary_terms_in_sentence": [
+        "consumer",
+        "plastic",
+        "Waste",
+        "Post-consumer plastic waste"
+      ]
+    },
+    {
+      "id": "VERIF-015",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "7",
+      "sub_location": "Article 7(11)",
+      "sentence": "By 1 January 2029 or 24 months from the date of entry into force of the implementing act referred to in paragraph 8, whichever is the latest, the calculation and verification of the percentage of recycled content contained in packaging under paragraph 1 shall comply with the rules laid down in the implementing act adopted pursuant to paragraph 8.",
+      "act_type_in_sentence": [
+        "implementing_act"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Recycled content"
+      ],
+      "glossary_terms_in_sentence": [
+        "Packaging"
+      ]
+    },
+    {
+      "id": "VERIF-016",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "9",
+      "sub_location": "Article 9(6), first subparagraph",
+      "sentence": "The Commission shall request that those standards include verification that the compostable packaging undergoing the biological decomposition subject to the specified parameters results ultimately in conversion into carbon dioxide or, in absence of oxygen, methane, and mineral salts, biomass and water.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Compostable packaging"
+      ],
+      "glossary_terms_in_sentence": [
+        "compostable packaging",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "VERIF-017",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "15",
+      "sub_location": "Article 15(4), first sentence",
+      "sentence": "Manufacturers shall adequately take into account changes in packaging design or in characteristics, as well as changes in harmonised standards, common technical specifications or other technical specifications by reference to which conformity is declared or by application of which its conformity is verified.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Conformity assessment"
+      ],
+      "glossary_terms_in_sentence": [
+        "technical specification",
+        "harmonised standard",
+        "Packaging",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "VERIF-018",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "19",
+      "sub_location": "Article 19(2), point (a), bullet-expansion of the lead-in 'distributors shall verify that:'",
+      "sentence": "Before making packaging available on the market, distributors shall verify that the producer that is subject to the obligations on extended producer responsibility for the packaging is registered in the register of producers referred to in Article 44.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Distributor verification",
+        "Producer registration"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "distributor",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "VERIF-019",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "19",
+      "sub_location": "Article 19(2), point (b), bullet-expansion of the lead-in 'distributors shall verify that:'",
+      "sentence": "Before making packaging available on the market, distributors shall verify that the packaging is labelled in accordance with Article 12.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Distributor verification"
+      ],
+      "glossary_terms_in_sentence": [
+        "distributor",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "VERIF-020",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "19",
+      "sub_location": "Article 19(2), point (c), bullet-expansion of the lead-in 'distributors shall verify that:'",
+      "sentence": "Before making packaging available on the market, distributors shall verify that the manufacturer and the importer have complied with the requirements set out in Article 15(5) and (6) and Article 18(3), respectively.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Distributor verification"
+      ],
+      "glossary_terms_in_sentence": [
+        "importer",
+        "distributor",
+        "Packaging",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "VERIF-021",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "19",
+      "sub_location": "Article 19(4), first sentence",
+      "sentence": "Information disclosed by the producer shall not be used by the distributor for any purpose other than to verify compliance with applicable requirements laid down in or pursuant to Articles 5 to 12.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Distributor verification"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "distributor"
+      ]
+    },
+    {
+      "id": "VERIF-022",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "35",
+      "sub_location": "Article 35 (sole sentence)",
+      "sentence": "For the purposes of compliance and verification of compliance of packaging with the requirements laid down in or pursuant to Articles 5 to 12, 24 and 26, tests, measurements and calculations shall be made using reliable, accurate and reproducible methods which take into account the generally recognised state-of-the art methods and whose results are considered to be of low uncertainty.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Conformity assessment"
+      ],
+      "glossary_terms_in_sentence": [
+        "Packaging"
+      ]
+    },
+    {
+      "id": "VERIF-023",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "45",
+      "sub_location": "Article 45(5)",
+      "sentence": "Member States may provide that, where automated data reconciliation with the national register is provided for in that Member State, it shall be applicable for verification of the information referred to in paragraph 4, points (a) and (b).",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Cross-border placement",
+        "Distributor verification"
+      ],
+      "glossary_terms_in_sentence": []
+    },
+    {
+      "id": "VERIF-024",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "47",
+      "sub_location": "Article 47(2), first sentence containing 'verif'",
+      "sentence": "Member States shall also establish the modalities for verifying compliance, including the information to be provided by producers or producer responsibility organisations to that end.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "VERIF-025",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "47",
+      "sub_location": "Article 47(2), second sentence containing 'verif', contains the substring twice",
+      "sentence": "The authorisation procedure shall include requirements on the verification of the arrangements put in place to ensure compliance with the requirements laid down in paragraph 3 of this Article, and timeframes for that verification, which shall not exceed 18 weeks from the submission of a complete application dossier.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": []
+    },
+    {
+      "id": "VERIF-026",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "47",
+      "sub_location": "Article 47(2), third sentence containing 'verif', contains the substring twice",
+      "sentence": "That verification shall be carried out by a competent authority or an independent expert who shall issue a verification report on its result.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": []
+    },
+    {
+      "id": "VERIF-027",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "53",
+      "sub_location": "Article 53(2), final sentence",
+      "sentence": "Calculations performed pursuant to this paragraph shall be adjusted to ensure the comparability, reliability and exhaustiveness of the results in accordance with the requirements and verifications to be established by the implementing act adopted pursuant to Article 56(7), point (a).",
+      "act_type_in_sentence": [
+        "implementing_act"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Annual reporting"
+      ],
+      "glossary_terms_in_sentence": []
+    },
+    {
+      "id": "VERIF-028",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "56",
+      "sub_location": "Article 56(7), point (a), combined with the lead-in",
+      "sentence": "The Commission shall, by 12 February 2027, adopt implementing acts establishing rules for the calculation, verification and submission of data in accordance with paragraph 1, points (a) and (c), and paragraph 2, including the methodology for determining the quantity of packaging waste generated, and the format for the submission of those data.",
+      "act_type_in_sentence": [
+        "implementing_act"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Annual reporting"
+      ],
+      "glossary_terms_in_sentence": [
+        "packaging waste",
+        "Packaging",
+        "Waste"
+      ]
+    },
+    {
+      "id": "VERIF-029",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "article",
+      "location": "58",
+      "sub_location": "Article 58(1), second subparagraph",
+      "sentence": "For the purposes of the first subparagraph, the authorities responsible for the enforcement of this Regulation shall follow up on complaints or reports related to alleged non-compliance of packaging with this Regulation, and verify that the appropriate corrective action has been taken.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [],
+      "glossary_terms_in_sentence": [
+        "Packaging"
+      ]
+    },
+    {
+      "id": "VERIF-030",
+      "source_file": "verif",
+      "search_term": "verif",
+      "location_type": "annex",
+      "location": "VI",
+      "sub_location": "Annex VI, Part A, Section 1 ('General requirements for re-use systems'), point (e), combined with the lead-in",
+      "sentence": "All re-use systems shall have a system operator that controls the proper functioning of the system and verifies whether re-use is properly enabled.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Re-use systems"
+      ],
+      "glossary_terms_in_sentence": [
+        "re-use",
+        "re-use system"
+      ]
+    },
+    {
+      "id": "AUDIT-001",
+      "source_file": "audit",
+      "search_term": "audit",
+      "location_type": "whereas",
+      "location": "49",
+      "sub_location": null,
+      "sentence": "The methodology for assessing, verifying and certifying, including through third-party audit, the equivalence of the rules applied where recycled content recovered from post-consumer plastic waste is recycled or collected in a third country should ensure a high level of protection of environment and human health, in particular with regard to the level of emissions into the air, water and soil, taking into account the need to ensure that recycling is performed in an environmentally sound manner, the possibility to ensure high-quality recycling, the level of the quality standards for the recycling sector, and the level of resource efficiency.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Recycled content",
+        "Audit and certification"
+      ],
+      "glossary_terms_in_sentence": [
+        "consumer",
+        "plastic",
+        "Waste",
+        "High-quality recycling",
+        "Post-consumer plastic waste"
+      ]
+    },
+    {
+      "id": "AUDIT-002",
+      "source_file": "audit",
+      "search_term": "audit",
+      "location_type": "article",
+      "location": "7",
+      "sub_location": "Article 7(8), second sentence",
+      "sentence": "The verification methodology may include the obligation to carry independent third-party audits on manufacturers of recycled content in the Union and of plastic packaging placed on the market as a sales unit separate from other products, to ensure that the conditions set out in paragraph 3 of this Article and in the delegated act adopted pursuant to paragraph 9 of this Article are met.",
+      "act_type_in_sentence": [
+        "delegated_act"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Recycled content",
+        "Audit and certification"
+      ],
+      "glossary_terms_in_sentence": [
+        "plastic",
+        "Packaging",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "AUDIT-003",
+      "source_file": "audit",
+      "search_term": "audit",
+      "location_type": "article",
+      "location": "7",
+      "sub_location": "Article 7(10)",
+      "sentence": "By 31 December 2026, the Commission shall adopt implementing acts establishing the methodology for assessing, verifying and certifying, including through third-party audit, the equivalence of the rules applied in cases where the recycled content recovered from post-consumer plastic waste is recycled or collected in a third country.",
+      "act_type_in_sentence": [
+        "implementing_act"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Recycled content",
+        "Audit and certification"
+      ],
+      "glossary_terms_in_sentence": [
+        "consumer",
+        "plastic",
+        "Waste",
+        "Post-consumer plastic waste"
+      ]
+    },
+    {
+      "id": "AUDIT-004",
+      "source_file": "audit",
+      "search_term": "audit",
+      "location_type": "article",
+      "location": "44",
+      "sub_location": "Article 44(7), second subparagraph, sentence contains 'audit' twice ('audited' and 'auditors')",
+      "sentence": "Member States may require the information provided pursuant to this paragraph to be audited and certified by independent auditors under the supervision of the competent authorities referred to in Article 40(1), on the basis of national standards, if any.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration",
+        "Annual reporting",
+        "Audit and certification"
+      ],
+      "glossary_terms_in_sentence": []
+    },
+    {
+      "id": "AUTH-001",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "whereas",
+      "location": "72",
+      "sub_location": null,
+      "sentence": "Packaging covered by mandatory deposit and return systems should bear a label informing the consumers that the packaging is covered by that system and that the packaging should therefore be collected through specific collection channels that are authorised for that purpose by national authorities.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Deposit-return system"
+      ],
+      "glossary_terms_in_sentence": [
+        "consumer",
+        "deposit",
+        "deposit and return system",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-002",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "whereas",
+      "location": "123",
+      "sub_location": "first sentence containing 'authorised'",
+      "sentence": "In such cases, if the producer is established in another Member State, it should appoint an authorised representative for the extended producer responsibility in the Member State where the end user is located.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Cross-border placement"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility",
+        "end user"
+      ]
+    },
+    {
+      "id": "AUTH-003",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "whereas",
+      "location": "123",
+      "sub_location": "second sentence containing 'authorised'",
+      "sentence": "In cases where the producer is established in a third country, it should also be possible for Member States to provide that the appointment of an authorised representative for the extended producer responsibility be mandatory in order to avoid the risk of eluding the extended producer responsibility obligations.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Cross-border placement"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility"
+      ]
+    },
+    {
+      "id": "AUTH-004",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "3",
+      "sub_location": "Article 3, point (12), definition of 'economic operator'",
+      "sentence": "'economic operator' means the manufacturer, the supplier, the importer, the distributor, the authorised representative, the final distributor and the fulfilment service provider;",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [],
+      "glossary_terms_in_sentence": [
+        "supplier",
+        "importer",
+        "distributor",
+        "authorised representative",
+        "final distributor",
+        "Economic operator",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "AUTH-005",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "3",
+      "sub_location": "Article 3, point (19), definition of 'authorised representative'",
+      "sentence": "'authorised representative' means any natural or legal person established in the Union that has received a written mandate from the manufacturer to act on that manufacturer's behalf in relation to specified tasks with regard to the manufacturer's obligations under this Regulation;",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "AUTH-006",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "3",
+      "sub_location": "Article 3, point (20), definition of 'authorised representative for the extended producer responsibility'",
+      "sentence": "'authorised representative for the extended producer responsibility' means any natural or legal person established in the Member State where the producer makes packaging or packaged products available on the territory of the Member State for the first time, or where it unpacks packaged products without being an end user, other than the Member State or the third country where the producer is established, and that is appointed by the producer in accordance Article 8a(5), third subparagraph, of Directive 2008/98/EC to fulfil the obligations of that producer under Chapter VIII of this Regulation;",
+      "act_type_in_sentence": [],
+      "external_refs": [
+        {
+          "citation": "Directive 2008/98/EC",
+          "url": "https://eur-lex.europa.eu/eli/dir/2008/98/oj",
+          "instrument_type": "dir"
+        }
+      ],
+      "chips": [
+        "Cross-border placement"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility",
+        "end user",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-007",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "3",
+      "sub_location": "Article 3, point (62), definition of 'deposit and return system'",
+      "sentence": "'deposit and return system' means a system in which a deposit is charged to the end user when purchasing a packaged or filled product covered by that system, and redeemed when the deposit bearing packaging is returned through one of the collection channels that are authorised for that purpose by the national authorities;",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Deposit-return system"
+      ],
+      "glossary_terms_in_sentence": [
+        "end user",
+        "deposit",
+        "deposit and return system",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-008",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "7",
+      "sub_location": "Article 7(12), second subparagraph",
+      "sentence": "Based on the assessment referred to in the first subparagraph of this paragraph, where suitable recycling technologies to recycle plastic packaging are not authorised under the relevant Union rules or are not sufficiently available in practice, taking into account any safety related requirements, especially concerning contact-sensitive plastic packaging, including food packaging, the Commission is empowered to adopt delegated acts in accordance with Article 64 to amend this Regulation in order to: (a) provide for derogations from the scope, timing or level of minimum percentage laid down in paragraph 1, points (b) and (d), of this Article, for specific plastic packaging; and (b) as appropriate, amend the list of the exceptions in paragraph 4 of this Article.",
+      "act_type_in_sentence": [
+        "delegated_act"
+      ],
+      "external_refs": [],
+      "chips": [
+        "Recycled content"
+      ],
+      "glossary_terms_in_sentence": [
+        "plastic",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-009",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "heading",
+      "location": "Article 17",
+      "sub_location": "title of Article 17",
+      "sentence": "Authorised representatives",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative"
+      ]
+    },
+    {
+      "id": "AUTH-010",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "17",
+      "sub_location": "Article 17(1)",
+      "sentence": "A manufacturer may, by a written mandate, appoint an authorised representative.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "AUTH-011",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "17",
+      "sub_location": "Article 17(2), first sentence",
+      "sentence": "An authorised representative shall perform the tasks specified in the mandate received from the manufacturer.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "AUTH-012",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "17",
+      "sub_location": "Article 17(2), point (a), bullet-expansion of the lead-in 'The mandate shall allow the authorised representative to do at least the following:'",
+      "sentence": "The mandate shall allow the authorised representative to keep the EU declaration of conformity and the technical documentation at the disposal of the national market surveillance authorities as follows: (i) as regards single-use packaging: for 5 years from the date the packaging was placed on the market; and (ii) as regards reusable packaging: for 10 years from the date the packaging was placed on the market.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)",
+        "Conformity assessment"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative",
+        "single-use packaging",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-013",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "17",
+      "sub_location": "Article 17(2), point (b), bullet-expansion; expanded sentence contains 'authorised' twice (once from the lead-in, once within the bullet)",
+      "sentence": "The mandate shall allow the authorised representative to cooperate with the competent national authorities, at their request, on any measures taken with regard to cases of non-compliance of the packaging covered by the authorised representative's mandate.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-014",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "17",
+      "sub_location": "Article 17(2), point (c), bullet-expansion of the lead-in 'The mandate shall allow the authorised representative to do at least the following:'",
+      "sentence": "The mandate shall allow the authorised representative to, upon a reasoned request from a competent national authority, provide that authority with all the information and technical documentation necessary to demonstrate the conformity of packaging in one or more languages which can be easily understood by that authority.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)",
+        "Conformity assessment"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-015",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "17",
+      "sub_location": "Article 17(2), point (d), bullet-expansion of the lead-in 'The mandate shall allow the authorised representative to do at least the following:'",
+      "sentence": "The mandate shall allow the authorised representative to, upon a request from a competent national authority, make available relevant documents within 10 days of the receipt of such a request.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative"
+      ]
+    },
+    {
+      "id": "AUTH-016",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "17",
+      "sub_location": "Article 17(2), point (e), bullet-expansion of the lead-in 'The mandate shall allow the authorised representative to do at least the following:'",
+      "sentence": "The mandate shall allow the authorised representative to terminate the mandate if the manufacturer acts contrary to its obligations under this Regulation.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "AUTH-017",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "17",
+      "sub_location": "Article 17(2), final subparagraph",
+      "sentence": "The obligations laid down in Article 15(1) and the obligation to draw up the technical documentation referred to in Annex VII and required under or pursuant to Articles 5 to 11 shall not form part of the authorised representative's mandate.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)",
+        "Conformity assessment"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative"
+      ]
+    },
+    {
+      "id": "AUTH-018",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "44",
+      "sub_location": "Article 44(1), second subparagraph",
+      "sentence": "Each national register shall provide links to other national registers of producers' websites to facilitate, in all Member States, registration of producers or authorised representatives for the extended producer responsibility.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative"
+      ]
+    },
+    {
+      "id": "AUTH-019",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "44",
+      "sub_location": "Article 44(3)",
+      "sentence": "Member States may provide that the obligations set out in this Article may, on the basis of a written mandate, be met on behalf of producers by an authorised representative for the extended producer responsibility.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration",
+        "Cross-border placement"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility"
+      ]
+    },
+    {
+      "id": "AUTH-020",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "44",
+      "sub_location": "Article 44(4)",
+      "sentence": "Producers shall not make available packaging or packaged products on the territory of a Member State for the first time, or unpack packaged products without being end users, if they or, where applicable, in accordance with Article 45, their authorised representatives for the extended producer responsibility are not registered in that Member State.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "end user",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-021",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "44",
+      "sub_location": "Article 44(6)",
+      "sentence": "Where an authorised representative for the extended producer responsibility represents more than one producer, it shall, in addition to the information to be provided pursuant to paragraph 5, provide the name and the contact details of each one of the producers which it represents, separately.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration",
+        "Cross-border placement"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility"
+      ]
+    },
+    {
+      "id": "AUTH-022",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "44",
+      "sub_location": "Article 44(7), first subparagraph",
+      "sentence": "The producer or, where applicable, the producer's authorised representative for the extended producer responsibility or the producer responsibility organisation, as stipulated by national law in accordance with paragraphs 2 and 3 of this Article, shall submit the information set out in Part B, point 1, of Annex IX to the competent authority responsible for the register, by 1 June for each full preceding calendar year.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration",
+        "Annual reporting"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "AUTH-023",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "44",
+      "sub_location": "Article 44(8), first subparagraph",
+      "sentence": "Where a producer has made available for the first time on the territory of the Member State a quantity of packaging, including packaging of packaged products, of less than 10 tonnes during one calendar year, or where a producer as defined in Article 3(1), point (15)(e), unpacks a quantity of packaging of less than 10 tonnes during one calendar year, the producer or, where applicable, the producer's authorised representative for the extended producer responsibility or the producer responsibility organisation, as stipulated by national law in accordance with paragraphs 2 and 3 of this Article, shall submit the information set out in Part B, point 2, of Annex IX to the competent authority responsible for the register, by 1 June for each full preceding calendar year.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration",
+        "Annual reporting"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility",
+        "Packaging",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "AUTH-024",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "44",
+      "sub_location": "Article 44(12)",
+      "sentence": "The producer, or, where applicable, the producer's authorised representative for the extended producer responsibility or the producer responsibility organisation shall, without undue delay, notify the competent authority of any changes to the information contained in the registration and of any permanent cessation of the making available for the first time on the territory of the Member State of the packaging or packaged product referred to in the registration.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility",
+        "Packaging",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "AUTH-025",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "45",
+      "sub_location": "Article 45(3), first sentence",
+      "sentence": "A producer referred to in Article 3(1), point (15)(c) and (d), shall appoint, by written mandate, an authorised representative for the extended producer responsibility in each Member State where the producer makes packaging or packaged products available for the first time, other than the Member State where the producer is established.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Cross-border placement"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-026",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "45",
+      "sub_location": "Article 45(3), second sentence",
+      "sentence": "Member States may provide that producers established in third countries shall appoint, by written mandate, an authorised representative for the extended producer responsibility when making packaging or packaged products available on their territory for the first time.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Cross-border placement"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-027",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "46",
+      "sub_location": "Article 46(1), first sentence",
+      "sentence": "Producers may entrust a producer responsibility organisation authorised in accordance with Article 47 with carrying out the extended producer responsibility obligations on their behalf.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "AUTH-028",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "46",
+      "sub_location": "Article 46(2), first sentence",
+      "sentence": "Where, on the territory of a Member State, one or multiple producer responsibility organisations are authorised to fulfil extended producer responsibility obligations on behalf of producers, the Member State shall ensure that the producer responsibility organisation or organisations and producers that have not entrusted the carrying out of the extended producer responsibility obligations to a producer responsibility organisation, when taken together, cover the whole territory of the Member State as regards the activities in accordance with Article 47(3) and Articles 48 and 50.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "AUTH-029",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "46",
+      "sub_location": "Article 46(3)",
+      "sentence": "Producer responsibility organisations shall ensure the confidentiality of the data in their possession as regards proprietary information or information directly attributable to individual producers or their authorised representatives.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "AUTH-030",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "article",
+      "location": "47",
+      "sub_location": "Article 47(2), final sentence",
+      "sentence": "The independent expert shall be independent of the competent authority and of the producer responsibility organisations or the producers authorised for individual fulfilment.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "AUTH-031",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "heading",
+      "location": "Annex VII",
+      "sub_location": "section heading '5. Authorised representative' within the technical-documentation annex",
+      "sentence": "5. Authorised representative",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative"
+      ]
+    },
+    {
+      "id": "AUTH-032",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "annex",
+      "location": "VII",
+      "sub_location": "Annex VII, point 5 ('Authorised representative')",
+      "sentence": "The manufacturer's obligations set out in point 4 as regards keeping the technical documentation may be fulfilled by its authorised representative, on its behalf and under its responsibility, provided that those obligations are specified in the mandate.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Authorised representative (general)",
+        "Conformity assessment"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "AUTH-033",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "annex",
+      "location": "VIII",
+      "sub_location": "Annex VIII, item 2 of the EU declaration-of-conformity template",
+      "sentence": "Name and address of the manufacturer and, where applicable, the manufacturer's authorised representative:",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Conformity assessment"
+      ],
+      "glossary_terms_in_sentence": [
+        "authorised representative",
+        "Manufacturer"
+      ]
+    },
+    {
+      "id": "AUTH-034",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "annex",
+      "location": "IX",
+      "sub_location": "Annex IX, Part A, point 1, point (a), bullet-expansion of the lead-in 'The information to be submitted by the producer or its authorised representative for extended producer responsibility shall include:'",
+      "sentence": "The information to be submitted by the producer or its authorised representative for extended producer responsibility shall include name and brand names (if available) under which the producer makes its packaging, including packaging of packaged products, available on the territory of the Member State and address of the producer, including postal code and place, street and number, country, telephone, if any, web address and e-mail address, indicating a single contact point.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "Packaging"
+      ]
+    },
+    {
+      "id": "AUTH-035",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "annex",
+      "location": "IX",
+      "sub_location": "Annex IX, Part A, point 1, point (b), bullet-expansion; expanded sentence contains 'authorised' four times (once from the lead-in, three times within the bullet)",
+      "sentence": "The information to be submitted by the producer or its authorised representative for extended producer responsibility shall include, where a producer has authorised an authorised representative with carrying out the extended producer responsibility obligations on its behalf, in addition to the information referred in point (a): name and address including postal code and place, street and number, country, telephone and e-mail address of the authorised representative.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration",
+        "Cross-border placement"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative"
+      ]
+    },
+    {
+      "id": "AUTH-036",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "annex",
+      "location": "IX",
+      "sub_location": "Annex IX, Part A, point 1, point (c), bullet-expansion of the lead-in 'The information to be submitted by the producer or its authorised representative for extended producer responsibility shall include:'",
+      "sentence": "The information to be submitted by the producer or its authorised representative for extended producer responsibility shall include the national identification code of the producer, including its trade register number or equivalent official registration number and the European or national tax identification number.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative"
+      ]
+    },
+    {
+      "id": "AUTH-037",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "annex",
+      "location": "IX",
+      "sub_location": "Annex IX, Part A, point 1, point (d), bullet-expansion of the lead-in 'The information to be submitted by the producer or its authorised representative for extended producer responsibility shall include:'",
+      "sentence": "The information to be submitted by the producer or its authorised representative for extended producer responsibility shall include a declaration on how the producer meets its responsibilities under Article 45, including a certificate issued by the producer responsibility organisation where Article 46(1) applies.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration",
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "AUTH-038",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "annex",
+      "location": "IX",
+      "sub_location": "Annex IX, Part A, point 2",
+      "sentence": "Where a producer responsibility organisation is entrusted with carrying out the extended producer responsibility obligations, the information to be provided by the producer shall include the name and contact details, including postal code and place, street and number, country, telephone, web address and e-mail address and the national identification code of the producer responsibility organisation, including the trade register number or an equivalent official registration number and the European or national tax identification number of the producer responsibility organisation, the represented producer's mandate, and a statement by the producer or, where applicable, producer's authorised representative for the extended producer responsibility or the producer responsibility organisation stating that the information provided is true.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Producer registration",
+        "Producer responsibility organisation"
+      ],
+      "glossary_terms_in_sentence": [
+        "producer",
+        "authorised representative",
+        "authorised representative for the extended producer responsibility",
+        "Producer responsibility organisation"
+      ]
+    },
+    {
+      "id": "AUTH-039",
+      "source_file": "authorised",
+      "search_term": "authorised",
+      "location_type": "annex",
+      "location": "X",
+      "sub_location": "Annex X, 'Minimum general requirements for deposit and return systems', point (l)",
+      "sentence": "Member States shall ensure that final distributors are obligated to accept the deposit bearing packaging of the packaging material and format that they distribute and to provide end users with redeemed deposits when the deposit bearing packaging is returned, unless end users have equally accessible means to redeem the deposit after the use of the deposit bearing packaging, through one of the collection channels that, for food packaging, ensure food grade recycling and that are authorised for that purpose by the national authorities.",
+      "act_type_in_sentence": [],
+      "external_refs": [],
+      "chips": [
+        "Deposit-return system"
+      ],
+      "glossary_terms_in_sentence": [
+        "distributor",
+        "final distributor",
+        "end user",
+        "deposit",
+        "Packaging"
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "distance contract",
+      "point": "14",
+      "definition": "distance contract as defined in Article 2(7) of Directive 2011/83/EU of the European Parliament and of the Council (55).",
+      "source_lines": [
+        1286
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "producer",
+      "point": "15",
+      "definition": "any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State and makes available for the first time from within the territory of that Member State and on that same territory transport packaging, service packaging, or primary production packaging, whether as single-use packaging or as reusable packaging. | any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State and makes available for the first time from within the territory of that Member State and on that same territory products packaged in packaging other than those referred to in point (a). | any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State or in a third country and makes available for the first time on the territory of another Member State, directly to end users, transport packaging, service packaging or primary production packaging, whether as single-use packaging or as reusable packaging. | any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State or in a third country and makes available for the first time on the territory of another Member State, directly to end users, products packaged in packaging other than those referred to in point (c). | any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State and unpacks packaged products without being an end user, unless another person is the producer as defined in point (a), (b), (c) or (d).",
+      "definition_parts": [
+        "any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State and makes available for the first time from within the territory of that Member State and on that same territory transport packaging, service packaging, or primary production packaging, whether as single-use packaging or as reusable packaging.",
+        "any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State and makes available for the first time from within the territory of that Member State and on that same territory products packaged in packaging other than those referred to in point (a).",
+        "any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State or in a third country and makes available for the first time on the territory of another Member State, directly to end users, transport packaging, service packaging or primary production packaging, whether as single-use packaging or as reusable packaging.",
+        "any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State or in a third country and makes available for the first time on the territory of another Member State, directly to end users, products packaged in packaging other than those referred to in point (c).",
+        "any manufacturer, importer or distributor to whom, irrespective of the selling technique used, including by means of distance contracts, one of the following applies: the manufacturer, importer or distributor is established in a Member State and unpacks packaged products without being an end user, unless another person is the producer as defined in point (a), (b), (c) or (d)."
+      ],
+      "source_lines": [
+        1288,
+        1290,
+        1292,
+        1294,
+        1296
+      ],
+      "multi_part": true,
+      "parts_count": 5
+    },
+    {
+      "term": "supplier",
+      "point": "16",
+      "definition": "any natural or legal person that supplies packaging or packaging material to a manufacturer.",
+      "source_lines": [
+        1298
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "importer",
+      "point": "17",
+      "definition": "any natural or legal person established within the Union that places packaging from a third country on the market.",
+      "source_lines": [
+        1300
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "distributor",
+      "point": "18",
+      "definition": "any natural or legal person in the supply chain, other than the manufacturer or importer, that makes packaging available on the market.",
+      "source_lines": [
+        1302
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "authorised representative",
+      "point": "19",
+      "definition": "any natural or legal person established in the Union that has received a written mandate from the manufacturer to act on that manufacturer's behalf in relation to specified tasks with regard to the manufacturer's obligations under this Regulation.",
+      "source_lines": [
+        1304
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "authorised representative for the extended producer responsibility",
+      "point": "20",
+      "definition": "any natural or legal person established in the Member State where the producer makes packaging or packaged products available on the territory of the Member State for the first time, or where it unpacks packaged products without being an end user, other than the Member State or the third country where the producer is established, and that is appointed by the producer in accordance Article 8a(5), third subparagraph, of Directive 2008/98/EC to fulfil the obligations of that producer under Chapter VIII of this Regulation.",
+      "source_lines": [
+        1306
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "final distributor",
+      "point": "21",
+      "definition": "the natural or legal person in the supply chain that delivers packaged products, including through re-use, or products that can be purchased through refill to the end user.",
+      "source_lines": [
+        1308
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "consumer",
+      "point": "22",
+      "definition": "any natural person who is acting for purposes which are outside their trade, business or profession.",
+      "source_lines": [
+        1310
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "end user",
+      "point": "23",
+      "definition": "any natural or legal person that resides or is established in the Union to whom a product has been made available either as a consumer or as a professional end user in the course of its industrial or professional activities, and that does not make that product further available on the market in the form supplied to it.",
+      "source_lines": [
+        1312
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "composite packaging",
+      "point": "24",
+      "definition": "a unit of packaging made of two or more different materials which are part of the weight of the main packaging material and cannot be separated manually and therefore form a single integral unit, unless one of the materials constitutes an insignificant part of the packaging unit and in any event no more than 5 % of the total mass of the packaging unit and excluding labels, varnishes, paints, inks, adhesives and lacquers; this is without prejudice to Directive (EU) 2019/904.",
+      "source_lines": [
+        1318
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "packaging waste",
+      "point": "25",
+      "definition": "any packaging or packaging material that is waste, with the exception of production residues.",
+      "source_lines": [
+        1320
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "packaging waste prevention",
+      "point": "26",
+      "definition": "measures that are taken before any packaging or packaging material has become packaging waste and that reduce the quantity of packaging waste, so that less or no packaging is required to contain, protect, handle, deliver or present products, including measures as regards the re-use of the packaging and measures to extend the life of the packaging before it becomes waste.",
+      "source_lines": [
+        1322
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "re-use",
+      "point": "27",
+      "definition": "any operation by which reusable packaging is used again multiple times for the same purpose for which it was conceived.",
+      "source_lines": [
+        1324
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "single-use packaging",
+      "point": "28",
+      "definition": "packaging which is not reusable packaging.",
+      "source_lines": [
+        1326
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "rotation",
+      "point": "29",
+      "definition": "the cycle that reusable packaging accomplishes from the moment it is placed on the market together with the product it is intended to contain, protect, handle, deliver or present to the moment it is ready to be re-used within a re-use system with a view to it being supplied again to end users together with another product.",
+      "source_lines": [
+        1328
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "trip",
+      "point": "30",
+      "definition": "the transfer of packaging, from filling or loading to emptying or unloading, as part of a rotation or on its own.",
+      "source_lines": [
+        1330
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "re-use system",
+      "point": "31",
+      "definition": "the organisational, technical or financial arrangements, together with incentives, that allow re-use either in a closed loop or open loop system, such as a deposit and return system that ensures that packaging is collected for re-use.",
+      "source_lines": [
+        1332
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "reconditioning",
+      "point": "32",
+      "definition": "any operation listed in Part B of Annex VI necessary to restore reusable packaging to a functional state for the purpose of its re-use.",
+      "source_lines": [
+        1334
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "refill",
+      "point": "33",
+      "definition": "an operation by which a container that fulfils the packaging function, and that is either owned by the end user or purchased by the end user at the point of sale of the final distributor is filled by the end user or by the final distributor with one or several products purchased by the end user from the final distributor.",
+      "source_lines": [
+        1336
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "refill station",
+      "point": "34",
+      "definition": "a place where a final distributor offers to end users products that can be purchased through refill.",
+      "source_lines": [
+        1338
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "HORECA sector",
+      "point": "35",
+      "definition": "Accommodation and Food Service Activities according to NACE Rev. 2 – Statistical classification of economic activities.",
+      "source_lines": [
+        1340
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "sales area",
+      "point": "36",
+      "definition": "the area dedicated to the display of goods offered for sale, to the payment for such goods, and to the circulation and presence of customers, but does not include the areas which are not open to the public, such as storage areas, or other areas where products are not displayed, such as car parks; in the context of e-commerce packaging, the storage and dispatch area is to be considered as sales area.",
+      "source_lines": [
+        1342
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "design for recycling",
+      "point": "37",
+      "definition": "the design of packaging, including individual components of packaging, that ensures the recyclability of the packaging with established collection, sorting and recycling processes proven in an operational environment.",
+      "source_lines": [
+        1344
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "recyclability",
+      "point": "38",
+      "definition": "the compatibility of packaging with the management and processing of waste by design, based on separate collection, sorting in separate streams, recycling at scale and the use of recycled materials to replace primary raw materials.",
+      "source_lines": [
+        1346
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "packaging waste recycled at scale",
+      "point": "39",
+      "definition": "packaging waste which is collected separately, sorted and recycled in installed infrastructure, using established processes proven in an operational environment which ensure, at Union level, an annual quantity of recycled material under each packaging category listed in Table 2 of Annex II equal to or greater",
+      "source_lines": [
+        1348
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "compostable packaging",
+      "point": "50",
+      "definition": "packaging that biodegrades in industrially controlled conditions or that is capable of undergoing biological decomposition in such conditions, including through anaerobic digestion, but not necessarily in a home-composting environment, combined, if necessary, with physical treatment, resulting ultimately in the conversion of the packaging into carbon dioxide or, in the absence of oxygen, methane, and mineral salts, biomass and water, and that does not hinder or jeopardise the separate collection and the composting and anaerobic digestion process;",
+      "source_lines": [
+        1388
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "home compostable packaging",
+      "point": "51",
+      "definition": "packaging that can biodegrade in non-controlled conditions that are not industrial-scale composting facilities and the composting process of which is performed by private individuals with the aim of producing compost for their own use;",
+      "source_lines": [
+        1390
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "plastic",
+      "point": "52",
+      "definition": "a material consisting of a polymer within the meaning of Article 3, point (5), of Regulation (EC) No 1907/2006, to which additives or other substances may have been added, and which is capable of functioning as a main structural component of packaging, with the exception of natural polymers that have not been chemically modified;",
+      "source_lines": [
+        1392
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "biobased plastics",
+      "point": "53",
+      "definition": "plastics made from biological resources, such as biomass feedstock, organic waste or by-products, and irrespective of whether the plastics are biodegradable or non-biodegradable;",
+      "source_lines": [
+        1394
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "single-use plastic beverage bottles",
+      "point": "54",
+      "definition": "beverage bottles listed in Part F of the Annex to Directive (EU) 2019/904;",
+      "source_lines": [
+        1396
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "plastic carrier bags",
+      "point": "55",
+      "definition": "carrier bags, with or without a handle, made of plastic, which are supplied to consumers at the point of sale of products;",
+      "source_lines": [
+        1398
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "lightweight plastic carrier bags",
+      "point": "56",
+      "definition": "plastic carrier bags with a wall thickness below 50 microns;",
+      "source_lines": [
+        1400
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "very lightweight plastic carrier bags",
+      "point": "57",
+      "definition": "plastic carrier bags with a wall thickness below 15 microns;",
+      "source_lines": [
+        1402
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "thick plastic carrier bags",
+      "point": "58",
+      "definition": "plastic carrier bags with a wall thickness between 50 and 99 microns;",
+      "source_lines": [
+        1404
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "very thick plastic carrier bags",
+      "point": "59",
+      "definition": "plastic carrier bags with a wall thickness above 99 microns;",
+      "source_lines": [
+        1406
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "waste receptacles",
+      "point": "60",
+      "definition": "receptacles used to store and collect waste, for example containers, bins and bags;",
+      "source_lines": [
+        1408
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "deposit",
+      "point": "61",
+      "definition": "a defined sum of money, not being part of the price of a packaged or filled product that is collected from the end user when purchasing such packaged or filled product, covered by a deposit and return system in a given Member State and redeemable when the end user or any other person returns the deposit bearing packaging to a collection point established for that purpose;",
+      "source_lines": [
+        1410
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "deposit and return system",
+      "point": "62",
+      "definition": "a system in which a deposit is charged to the end user when purchasing a packaged or filled product covered by that system, and redeemed when the deposit bearing packaging is returned through one of the collection channels that are authorised for that purpose by the national authorities;",
+      "source_lines": [
+        1412
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "technical specification",
+      "point": "63",
+      "definition": "a document that prescribes technical requirements to be fulfilled by a product, process or service;",
+      "source_lines": [
+        1414
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "harmonised standard",
+      "point": "64",
+      "definition": "a standard as defined in Article 2(1), point (c), of Regulation (EU) No 1025/2012;",
+      "source_lines": [
+        1416
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Packaging",
+      "point": null,
+      "definition": "an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including an item that is necessary to contain, support or preserve a product throughout its lifetime, without being an integral part of the product, and which is intended to be used, consumed or disposed of together with the product. | an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including a component of, and ancillary element to, an item referred to in point (a) that is integrated into the item. | an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including an ancillary element to an item referred to in point (a) that is hung directly on, or attached to, the product and that performs a packaging function, without being an integral part of the product, and which is intended to be used, consumed or disposed of together with the product. | an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including an item that is designed and intended to be filled at the point of sale in order to dispense the product, which is also referred to as 'service packaging'. | an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including a disposable item that is sold and filled or designed and intended to be filled at the point of sale and which performs a packaging function. | an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including a permeable tea, coffee or other beverage bag, or soft after-use system single-serve unit that contains tea, coffee or another beverage, and which is intended to be used and disposed of together with the product.",
+      "definition_parts": [
+        "an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including an item that is necessary to contain, support or preserve a product throughout its lifetime, without being an integral part of the product, and which is intended to be used, consumed or disposed of together with the product.",
+        "an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including a component of, and ancillary element to, an item referred to in point (a) that is integrated into the item.",
+        "an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including an ancillary element to an item referred to in point (a) that is hung directly on, or attached to, the product and that performs a packaging function, without being an integral part of the product, and which is intended to be used, consumed or disposed of together with the product.",
+        "an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including an item that is designed and intended to be filled at the point of sale in order to dispense the product, which is also referred to as 'service packaging'.",
+        "an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including a disposable item that is sold and filled or designed and intended to be filled at the point of sale and which performs a packaging function.",
+        "an item, irrespective of the materials from which it is made, that is intended to be used by an economic operator for the containment, protection, handling, delivery or presentation of products to another economic operator or to an end user, and that can be differentiated by packaging format based on its function, material and design, including a permeable tea, coffee or other beverage bag, or soft after-use system single-serve unit that contains tea, coffee or another beverage, and which is intended to be used and disposed of together with the product."
+      ],
+      "source_lines": [
+        1238,
+        1240,
+        1242,
+        1244,
+        1246,
+        1248
+      ],
+      "multi_part": true,
+      "parts_count": 6
+    },
+    {
+      "term": "Waste",
+      "point": null,
+      "definition": "waste as defined in Article 3, point (1), of Directive 2008/98/EC; reusable packaging sent to reconditioning is not considered to be waste.",
+      "source_lines": [
+        1256
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Take-away packaging",
+      "point": null,
+      "definition": "service packaging filled at attended points of sale with beverages or ready-prepared food that are packaged for transportation and immediate consumption at another location without the need for any further preparation and are typically consumed from the packaging.",
+      "source_lines": [
+        1258
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Primary production packaging",
+      "point": null,
+      "definition": "an item designed and intended to be used as packaging for unprocessed products from primary production as defined in Regulation (EC) No 178/2002 of the European Parliament and of the Council.",
+      "source_lines": [
+        1260
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Sales packaging",
+      "point": null,
+      "definition": "packaging conceived so as to constitute a sales unit consisting of products and packaging to the end user at the point of sale.",
+      "source_lines": [
+        1262
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Grouped packaging",
+      "point": null,
+      "definition": "packaging conceived so as to constitute a grouping of a certain number of sales units at the point of sale, irrespective of whether that grouping of sales units is sold as such to the end user or whether it serves as a means to facilitate the restocking of shelves at the point of sale or to create a stock-keeping or distribution unit, and which can be removed from the product without affecting its characteristics.",
+      "source_lines": [
+        1264
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Transport packaging",
+      "point": null,
+      "definition": "packaging conceived so as to facilitate the handling and transport of one or more sales units or a grouping of sales units, in order to prevent damage to the product from handling and transport, but which excludes road, rail, ship and air containers.",
+      "source_lines": [
+        1266
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "E-commerce packaging",
+      "point": null,
+      "definition": "transport packaging used to deliver products in the context of sale online or through other means of distance sales to the end user.",
+      "source_lines": [
+        1268
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Making available on the market",
+      "point": null,
+      "definition": "any supply of packaging, whether empty or with a product, for distribution, consumption or use on the Union market in the course of a commercial activity, whether in return for payment or free of charge.",
+      "source_lines": [
+        1270
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Placing on the market",
+      "point": null,
+      "definition": "the first making available of packaging, whether empty or with a product, on the Union market.",
+      "source_lines": [
+        1272
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Making available on the territory of the Member State",
+      "point": null,
+      "definition": "any supply of packaging, whether empty or with a product, for distribution, consumption or use on the territory of the Member State in the course of a commercial activity, whether in return for payment or free of charge.",
+      "source_lines": [
+        1274
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Economic operator",
+      "point": null,
+      "definition": "the manufacturer, the supplier, the importer, the distributor, the authorised representative, the final distributor and the fulfilment service provider.",
+      "source_lines": [
+        1276
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Manufacturer",
+      "point": null,
+      "definition": "any natural or legal person that manufactures packaging or a packaged product.",
+      "source_lines": [
+        1278
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Material recycling",
+      "point": null,
+      "definition": "any recovery operation by which waste materials are reprocessed into materials or substances, whether for the original or other purposes, with the exception of biological treatment of waste, reprocessing of organic material, energy recovery and reprocessing into materials that are to be used as fuels or for backfilling operations (definition 40).",
+      "source_lines": [
+        1354
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "High-quality recycling",
+      "point": null,
+      "definition": "any recycling process which produces recycled materials that are of equivalent quality to the original materials, based on preserved technical characteristics, and that are used as a substitute to primary raw materials for packaging or other applications where the quality of the recycled material is retained (definition 41).",
+      "source_lines": [
+        1356
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Packaging category",
+      "point": null,
+      "definition": "a combination of material and specific packaging design which determines recyclability by reference to established state-of-the-art collection, sorting and recycling processes proven in an operational environment and which is relevant for the definition of the design for recycling criteria (definition 42).",
+      "source_lines": [
+        1358
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Integrated component",
+      "point": null,
+      "definition": "a packaging component, whether or not of the same material as, or distinct from, the main body of the packaging unit, that is integral to the packaging unit and its functioning, that does not need to be separated from the main body of the packaging unit in order to ensure the functionality of the packaging unit and that is typically discarded at the same time as the main body of the packaging unit, although not necessarily via the same disposal route (definition 43).",
+      "source_lines": [
+        1360
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Separate component",
+      "point": null,
+      "definition": "a packaging component, whether or not from the same material as the main body of the packaging unit, that is distinct from the main body of the packaging unit, that needs to be disassembled completely and permanently from the main body of the packaging unit and that is typically discarded prior to and separately from the main body of the packaging unit, including packaging components that can be separated from each other simply through mechanical stress during transportation or sorting (definition 44).",
+      "source_lines": [
+        1362
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Unit of packaging",
+      "point": null,
+      "definition": "a unit, including any integrated or separate components, which as a whole serves a packaging function, such as the containment, protection, handling, delivery, storage, transport or presentation of products, and includes independent units of grouped or transport packaging where they are discarded prior to the point of sale (definition 45).",
+      "source_lines": [
+        1364
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Innovative packaging",
+      "point": null,
+      "definition": "a form of packaging that is manufactured using new materials, resulting in a significant improvement in the functions of the packaging, such as the containment, protection, handling, or delivery of products, and in overall demonstrable environmental benefits, with the exception of packaging that is the result of modification to existing packaging for the main purpose of improving the presentation of products and marketing (definition 46).",
+      "source_lines": [
+        1366
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Secondary raw materials",
+      "point": null,
+      "definition": "materials that have undergone all necessary checking and sorting and been obtained through recycling processes and can substitute primary raw materials (definition 47).",
+      "source_lines": [
+        1368
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Post-consumer plastic waste",
+      "point": null,
+      "definition": "waste that is plastic and that has been generated from plastic products that have been placed on the market or supplied for distribution, consumption or use in a third country in the course of a commercial activity, whether in return for payment or free of charge (definition 48).",
+      "source_lines": [
+        1370
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Contact-sensitive packaging",
+      "point": null,
+      "definition": "packaging that is intended to be used for products falling within the scope of Regulations (EC) No 1831/2003 of the European Parliament and of the Council, (EC) No 1935/2004, (EC) No 767/2009 of the European Parliament and of the Council, (EC) No 1223/2009 of the European Parliament and of the Council, (EU) 2017/745, (EU) 2017/746, (EU) 2019/4 of the European Parliament and of the Council (definition 49).",
+      "source_lines": [
+        1372
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Conformity assessment",
+      "point": null,
+      "definition": "the process demonstrating whether the sustainability, safety, labelling and information requirements of this Regulation relating to packaging have been fulfilled.",
+      "source_lines": [
+        1424
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Producer responsibility organisation",
+      "point": null,
+      "definition": "a legal entity that financially or financially and operationally organises the fulfilment of extended producer responsibility obligations on behalf of several producers.",
+      "source_lines": [
+        1426
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Life-cycle",
+      "point": null,
+      "definition": "the consecutive and interlinked stages of the life of packaging, consisting of raw material acquisition or generation from natural resources, pre-processing, manufacturing, storage, distribution, use, repair, re-use and end-of-life.",
+      "source_lines": [
+        1428
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Packaging presenting a risk",
+      "point": null,
+      "definition": "packaging that, by not complying with a requirement set out in or pursuant to this Regulation other than those requirements listed in Article 62(1), could adversely affect the environment, health or other public interests protected by that requirement.",
+      "source_lines": [
+        1430
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Packaging presenting a serious risk",
+      "point": null,
+      "definition": "packaging presenting a risk for which, based on an assessment, the degree of the relevant non-compliance or the associated harm is considered to require rapid intervention by the market surveillance authorities, including cases where the effects of the non-compliance are not immediate.",
+      "source_lines": [
+        1432
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Online platform",
+      "point": null,
+      "definition": "online platform as defined in Article 3, point (i), of Regulation (EU) 2022/2065.",
+      "source_lines": [
+        1434
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    },
+    {
+      "term": "Public contracts",
+      "point": null,
+      "definition": "public contracts as defined in Article 2, point (5), of Directive 2014/24/EU or as referred to in Directive 2014/25/EU, as applicable.",
+      "source_lines": [
+        1436
+      ],
+      "multi_part": false,
+      "parts_count": 1
+    }
+  ],
+  "notes": [
+    "Three sentences appear in two source JSONs each (Recital 49 in verif/audit; Article 7(8) sentence 2 in verif/audit; Article 7(10) in verif/audit). Each gets distinct VERIF-NNN and AUDIT-NNN entries; the duplicate sentence text is preserved on both.",
+    "act_type_in_sentence flags only the literal occurrence of 'implementing act/acts', 'delegated act/acts', or 'implementing powers'. A sentence that means the same thing in different words is not tagged.",
+    "external_refs covers Regulation/Directive/Decision/Recommendation citations matched by regex. URLs are EUR-Lex ELI form, constructed by formula. Verify URLs by spot-check before publication.",
+    "Article 3 glossary extracted from the regulation source MD. Two terms ('Packaging' and 'producer') have multi-part definitions because PPWR Article 3 numbers them as (1)(a)-(g) and (15)(a)-(e) respectively; each part is preserved in 'definition_parts'.",
+    "Fourteen Article 3 definitions appear without point numbers because the regulation source MD lost the (N) prefix during file processing; their position can be cross-referenced via 'source_lines'. These are flagged for verification against the official OJ text.",
+    "chips are authored labels. They are the only field in this build where authoring judgment is applied; review and override at will.",
+    "The `context` field was dropped 2026-05-01 because the source JSONs contained authored paraphrases under that name, not verbatim regulation text. The sentence field plus location citation, plus the per-entry EUR-Lex outbound link, supersede the dropped context field."
+  ]
+}

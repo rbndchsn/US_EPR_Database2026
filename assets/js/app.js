@@ -163,6 +163,8 @@
       renderBrowse(app);
     } else if (path === '/deadlines') {
       renderDeadlines(app);
+    } else if (path === '/verification') {
+      renderVerification(app);
     } else if (path.startsWith('/bill/')) {
       const id = decodeURIComponent(path.replace('/bill/', ''));
       renderBill(app, id);
@@ -722,6 +724,411 @@
       wrap.appendChild(row);
     });
     target.appendChild(wrap);
+  }
+
+  // ---------- Verification (PPWR) ----------
+  // Lazy-loaded view: pulls data/ppwr_verification.json on first render and
+  // caches the result on the state object. Independent of the SPC dataset
+  // boot path, so the home/browse/deadlines/bill views stay unaffected.
+
+  const VERIF_PPWR_URL = 'https://eur-lex.europa.eu/eli/reg/2025/40/oj';
+  const verifState = {
+    data: null,
+    loading: false,
+    error: null,
+    source: new Set(),
+    loctype: new Set(),
+    act: new Set(),
+    chips: new Set(),
+    search: '',
+    selectedId: null,
+  };
+
+  function verifSortKey(e) {
+    const ltOrder = { whereas: 0, article: 1, annex: 2, heading: 3, footnote: 4 };
+    const lto = ltOrder[e.location_type] === undefined ? 9 : ltOrder[e.location_type];
+    const loc = e.location;
+    const isNum = /^\d+$/.test(loc);
+    const num = isNum ? parseInt(loc, 10) : 999;
+    const romanOrder = { VI: 1, VII: 2, VIII: 3, IX: 4, X: 5 };
+    const ro = romanOrder[loc] === undefined ? 99 : romanOrder[loc];
+    return [lto, num, ro, e.id];
+  }
+  function verifCompare(a, b) {
+    const ka = verifSortKey(a), kb = verifSortKey(b);
+    for (let i = 0; i < ka.length; i++) {
+      if (ka[i] < kb[i]) return -1;
+      if (ka[i] > kb[i]) return 1;
+    }
+    return 0;
+  }
+
+  function verifLocationTitle(e) {
+    if (e.location_type === 'whereas') return 'Recital ' + e.location;
+    if (e.location_type === 'article') return 'Article ' + e.location;
+    if (e.location_type === 'annex') return 'Annex ' + e.location;
+    if (e.location_type === 'heading') return 'Heading: ' + e.location;
+    if (e.location_type === 'footnote') return 'Footnote ' + e.location;
+    return e.location_type + ' ' + e.location;
+  }
+
+  function verifEntryMatches(entry) {
+    if (verifState.source.size && !verifState.source.has(entry.source_file)) return false;
+    if (verifState.loctype.size && !verifState.loctype.has(entry.location_type)) return false;
+    if (verifState.act.size) {
+      const tags = entry.act_type_in_sentence || [];
+      let any = false;
+      for (const t of verifState.act) {
+        if (t === 'none') {
+          if (tags.length === 0) { any = true; break; }
+        } else if (tags.indexOf(t) !== -1) { any = true; break; }
+      }
+      if (!any) return false;
+    }
+    if (verifState.chips.size) {
+      const c = entry.chips || [];
+      let any = false;
+      for (const ch of verifState.chips) if (c.indexOf(ch) !== -1) { any = true; break; }
+      if (!any) return false;
+    }
+    if (verifState.search) {
+      if (entry.sentence.toLowerCase().indexOf(verifState.search.toLowerCase()) === -1) return false;
+    }
+    return true;
+  }
+
+  function verifHighlight(text, query) {
+    if (!query) return escapeHtml(text);
+    const safe = escapeHtml(text);
+    const q = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return safe.replace(new RegExp(q, 'gi'), function (m) {
+      return '<mark class="verif-search-hit">' + m + '</mark>';
+    });
+  }
+
+  function verifRenderEntryCard(entry) {
+    const trunc = entry.sentence.length > 220 ? entry.sentence.slice(0, 220) + '...' : entry.sentence;
+    const chipPills = (entry.chips || []).map(function (c) {
+      return '<span class="verif-chip-mini">' + escapeHtml(c) + '</span>';
+    }).join('');
+    const actPills = (entry.act_type_in_sentence || []).map(function (a) {
+      return '<span class="verif-chip-mini verif-act">' + escapeHtml(a) + '</span>';
+    }).join('');
+    const extPills = (entry.external_refs || []).map(function (r) {
+      return '<span class="verif-chip-mini verif-ext">' + escapeHtml(r.citation) + '</span>';
+    }).join('');
+    const subHtml = entry.sub_location ? '<p class="verif-sub">' + escapeHtml(entry.sub_location) + '</p>' : '';
+    const selected = verifState.selectedId === entry.id ? ' is-selected' : '';
+    return '<div class="verif-card' + selected + '" data-id="' + escapeHtml(entry.id) + '">' +
+      '<div class="verif-card-head">' +
+      '<div><span class="verif-id">' + escapeHtml(entry.id) + '</span>' +
+      '<span class="verif-loc">' + escapeHtml(verifLocationTitle(entry)) + '</span></div>' +
+      '<span class="verif-source">' + escapeHtml(entry.source_file) + '</span></div>' +
+      subHtml +
+      '<p class="verif-sentence">' + verifHighlight(trunc, verifState.search) + '</p>' +
+      '<div class="verif-pills">' + chipPills + actPills + extPills + '</div></div>';
+  }
+
+  function verifRenderEntryDetail(entry) {
+    const detail = document.querySelector('[data-slot=verif-detail]');
+    if (!detail) return;
+    if (!entry) {
+      detail.innerHTML = '<p class="verif-empty">Select an entry to see the verbatim source sentence, glossary terms, and external links. Use "Read in PPWR" to jump to the regulation.</p>';
+      return;
+    }
+    let sentenceHtml = verifHighlight(entry.sentence, verifState.search);
+    const glossTerms = entry.glossary_terms_in_sentence || [];
+    if (glossTerms.length) {
+      const sortedTerms = glossTerms.slice().sort(function (a, b) { return b.length - a.length; });
+      const escapedTerms = sortedTerms.map(function (t) { return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); });
+      const combined = new RegExp('\\b(' + escapedTerms.join('|') + ')s?\\b', 'gi');
+      sentenceHtml = sentenceHtml.replace(combined, function (m, p1) {
+        const lower = p1.toLowerCase();
+        const matched = sortedTerms.find(function (t) { return t.toLowerCase() === lower; }) || p1;
+        return '<span class="verif-gloss-term" data-term="' + escapeHtml(matched) + '">' + m + '</span>';
+      });
+    }
+    const chipPills = (entry.chips || []).map(function (c) { return '<span class="verif-chip-mini">' + escapeHtml(c) + '</span>'; }).join('');
+    const actPills = (entry.act_type_in_sentence || []).map(function (a) { return '<span class="verif-chip-mini verif-act">' + escapeHtml(a) + '</span>'; }).join('');
+    const extLinks = (entry.external_refs || []).map(function (r) {
+      return '<a href="' + escapeHtml(r.url) + '" target="_blank" rel="noopener" class="verif-chip-mini verif-ext">' + escapeHtml(r.citation) + ' &#8599;</a>';
+    }).join('');
+    const glossList = glossTerms.map(function (t) { return '<span class="verif-chip-mini verif-gloss-chip" data-term="' + escapeHtml(t) + '">' + escapeHtml(t) + '</span>'; }).join('');
+
+    const subHtml = entry.sub_location ? '<p class="verif-sub" style="margin-top:4px;">' + escapeHtml(entry.sub_location) + '</p>' : '';
+    detail.innerHTML =
+      '<div class="verif-detail-head">' +
+      '<div class="verif-detail-row"><span class="verif-id">' + escapeHtml(entry.id) + '</span>' +
+      '<span class="verif-source">' + escapeHtml(entry.source_file) + '</span></div>' +
+      '<h3>' + escapeHtml(verifLocationTitle(entry)) + '</h3>' + subHtml + '</div>' +
+      '<div class="verif-detail-section"><p class="verif-detail-label">Source sentence (verbatim)</p>' +
+      '<p class="verif-sentence-block">' + sentenceHtml + '</p></div>' +
+      '<div class="verif-detail-section"><a href="' + VERIF_PPWR_URL + '" target="_blank" rel="noopener" class="verif-read-link">Read in PPWR (EUR-Lex) &#8599;</a></div>' +
+      (chipPills ? '<div class="verif-detail-section"><p class="verif-detail-label">Topics</p>' + chipPills + '</div>' : '') +
+      (actPills ? '<div class="verif-detail-section"><p class="verif-detail-label">Commission-act mention</p>' + actPills + '</div>' : '') +
+      (extLinks ? '<div class="verif-detail-section"><p class="verif-detail-label">External instruments cited</p>' + extLinks + '</div>' : '') +
+      (glossList ? '<div class="verif-detail-section"><p class="verif-detail-label">Article 3 terms in sentence (click to define)</p>' + glossList + '</div>' : '') +
+      '<p class="verif-detail-foot">For surrounding paragraph context, use the "Read in PPWR" link and navigate to ' +
+      escapeHtml(verifLocationTitle(entry)) + (entry.sub_location ? ', ' + escapeHtml(entry.sub_location) : '') + '.</p>';
+
+    detail.querySelectorAll('.verif-gloss-term, .verif-gloss-chip').forEach(function (el) {
+      el.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        verifShowGlossaryPopover(el.dataset.term, ev);
+      });
+    });
+  }
+
+  function verifShowGlossaryPopover(term, event) {
+    const data = verifState.data;
+    if (!data) return;
+    const entry = data.glossary.find(function (g) { return g.term.toLowerCase() === term.toLowerCase(); });
+    if (!entry) return;
+    verifClosePopover();
+    const pop = document.createElement('div');
+    pop.id = 'verif-popover';
+    pop.className = 'verif-popover';
+    pop.style.left = Math.min(event.clientX, window.innerWidth - 420) + 'px';
+    pop.style.top = Math.min(event.clientY + 12, window.innerHeight - 260) + 'px';
+    const ptStr = entry.point ? 'Point (' + entry.point + ')' : 'Point lost in source MD';
+    let body;
+    if (entry.multi_part) {
+      body = '<p class="verif-multi-note">Multi-part definition (' + entry.parts_count + ' subparts)</p>' +
+        entry.definition_parts.map(function (p, i) { return '<p>(' + (i + 1) + ') ' + escapeHtml(p) + '</p>'; }).join('');
+    } else {
+      body = '<p>' + escapeHtml(entry.definition) + '</p>';
+    }
+    pop.innerHTML =
+      '<div class="verif-popover-head"><div>' +
+      '<p class="verif-popover-pt">' + ptStr + '</p>' +
+      '<h4>' + escapeHtml(entry.term) + '</h4></div>' +
+      '<button class="verif-popover-close" onclick="(function(){var p=document.getElementById(\'verif-popover\');if(p)p.remove();})()">&times;</button></div>' +
+      body +
+      '<p class="verif-line-ref">PPWR Article 3, source line(s) ' + entry.source_lines.join(', ') + '</p>';
+    document.body.appendChild(pop);
+    setTimeout(function () { document.addEventListener('click', verifClosePopover, { once: true }); }, 50);
+  }
+  function verifClosePopover() {
+    const p = document.getElementById('verif-popover');
+    if (p) p.remove();
+  }
+
+  function verifRender(root) {
+    const data = verifState.data;
+    if (!data) return;
+    const filtered = data.entries.filter(verifEntryMatches).sort(verifCompare);
+    const counter = document.querySelector('[data-slot=verif-counter]');
+    if (counter) counter.textContent = filtered.length + ' of ' + data.entries.length + ' entries';
+    const list = document.querySelector('[data-slot=verif-list]');
+    if (list) {
+      list.innerHTML = filtered.length
+        ? filtered.map(verifRenderEntryCard).join('')
+        : '<p class="verif-empty">No entries match the current filters.</p>';
+      list.querySelectorAll('.verif-card').forEach(function (c) {
+        c.addEventListener('click', function () {
+          verifState.selectedId = c.dataset.id;
+          verifRender(root);
+        });
+      });
+    }
+    if (verifState.selectedId) {
+      const sel = data.entries.find(function (e) { return e.id === verifState.selectedId; });
+      verifRenderEntryDetail(sel);
+    } else {
+      verifRenderEntryDetail(null);
+    }
+  }
+
+  function verifBuildFilters(node) {
+    const data = verifState.data;
+    if (!data) return;
+    const sources = ['verif', 'audit', 'authorised'];
+    const sourceTarget = node.querySelector('[data-slot=verif-filter-source]');
+    sourceTarget.innerHTML = sources.map(function (s) {
+      const n = data.entries.filter(function (e) { return e.source_file === s; }).length;
+      return '<button class="chip" data-filter="source" data-value="' + s + '" type="button">' + s + ' (' + n + ')</button>';
+    }).join('');
+
+    const lts = ['whereas', 'article', 'annex', 'heading', 'footnote'];
+    const labels = { whereas: 'Recitals', article: 'Articles', annex: 'Annexes', heading: 'Headings', footnote: 'Footnotes' };
+    const ltTarget = node.querySelector('[data-slot=verif-filter-loctype]');
+    ltTarget.innerHTML = lts.map(function (s) {
+      const n = data.entries.filter(function (e) { return e.location_type === s; }).length;
+      if (!n) return '';
+      return '<button class="chip" data-filter="loctype" data-value="' + s + '" type="button">' + labels[s] + ' (' + n + ')</button>';
+    }).join('');
+
+    const acts = ['implementing_act', 'delegated_act', 'implementing_powers'];
+    const actLabels = { implementing_act: 'Implementing act', delegated_act: 'Delegated act', implementing_powers: 'Implementing powers' };
+    const actTarget = node.querySelector('[data-slot=verif-filter-act]');
+    let actHtml = acts.map(function (a) {
+      const n = data.entries.filter(function (e) { return (e.act_type_in_sentence || []).indexOf(a) !== -1; }).length;
+      return '<button class="chip" data-filter="act" data-value="' + a + '" type="button">' + actLabels[a] + ' (' + n + ')</button>';
+    }).join('');
+    const noneCount = data.entries.filter(function (e) { return (e.act_type_in_sentence || []).length === 0; }).length;
+    actHtml += '<button class="chip" data-filter="act" data-value="none" type="button">No mention (' + noneCount + ')</button>';
+    actTarget.innerHTML = actHtml;
+
+    const chipsTarget = node.querySelector('[data-slot=verif-filter-chips]');
+    chipsTarget.innerHTML = data.chip_vocabulary.map(function (c) {
+      const n = data.entries.filter(function (e) { return (e.chips || []).indexOf(c) !== -1; }).length;
+      return '<button class="chip" data-filter="chips" data-value="' + escapeHtml(c) + '" type="button">' + escapeHtml(c) + ' (' + n + ')</button>';
+    }).join('');
+
+    node.querySelectorAll('[data-filter]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const filter = btn.dataset.filter;
+        const value = btn.dataset.value;
+        const set = verifState[filter];
+        if (set.has(value)) set.delete(value);
+        else set.add(value);
+        const pressed = set.has(value);
+        btn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+        verifRender(document.getElementById('app'));
+      });
+    });
+  }
+
+  function verifResetFilters() {
+    verifState.source.clear();
+    verifState.loctype.clear();
+    verifState.act.clear();
+    verifState.chips.clear();
+    verifState.search = '';
+    verifState.selectedId = null;
+    document.querySelectorAll('.verif-filters [data-filter]').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+    const s = document.querySelector('[data-slot=verif-search]');
+    if (s) s.value = '';
+    verifRender(document.getElementById('app'));
+  }
+
+  function verifOpenGlossary() {
+    const data = verifState.data;
+    if (!data) return;
+    const overlay = document.createElement('div');
+    overlay.className = 'verif-modal-overlay';
+    overlay.id = 'verif-glossary-modal';
+    const itemsHtml = data.glossary.map(function (g) {
+      const ptStr = g.point ? '(' + g.point + ')' : '(no point)';
+      let body;
+      if (g.multi_part) {
+        body = '<p class="verif-multi-note">Multi-part definition, ' + g.parts_count + ' subparts</p>' +
+          g.definition_parts.map(function (p, i) { return '<p>(' + (i + 1) + ') ' + escapeHtml(p) + '</p>'; }).join('');
+      } else {
+        body = '<p>' + escapeHtml(g.definition) + '</p>';
+      }
+      return '<div class="verif-gloss-entry">' +
+        '<div class="verif-gloss-head"><h4><span class="verif-gloss-pt">' + ptStr + '</span>' + escapeHtml(g.term) + '</h4>' +
+        '<span class="verif-gloss-line">line ' + g.source_lines.join(',') + '</span></div>' +
+        body + '</div>';
+    }).join('');
+    overlay.innerHTML =
+      '<div class="verif-modal">' +
+      '<div class="verif-modal-head"><div><h2>Article 3 Glossary</h2>' +
+      '<p class="verif-modal-sub">Definitions verbatim from PPWR (Regulation EU 2025/40), Article 3</p></div>' +
+      '<button class="verif-modal-close">&times;</button></div>' +
+      '<div class="verif-modal-search"><input type="search" id="verif-gloss-search" placeholder="Search glossary terms..." /></div>' +
+      '<div class="verif-modal-body" id="verif-gloss-list">' + itemsHtml + '</div></div>';
+    document.body.appendChild(overlay);
+    overlay.querySelector('.verif-modal-close').addEventListener('click', function () { overlay.remove(); });
+    overlay.addEventListener('click', function (ev) { if (ev.target === overlay) overlay.remove(); });
+    document.getElementById('verif-gloss-search').addEventListener('input', function (ev) {
+      const q = ev.target.value.trim().toLowerCase();
+      const filtered = q
+        ? data.glossary.filter(function (g) { return g.term.toLowerCase().indexOf(q) !== -1 || g.definition.toLowerCase().indexOf(q) !== -1; })
+        : data.glossary;
+      document.getElementById('verif-gloss-list').innerHTML = filtered.length
+        ? filtered.map(function (g) {
+          const ptStr = g.point ? '(' + g.point + ')' : '(no point)';
+          let body;
+          if (g.multi_part) {
+            body = '<p class="verif-multi-note">Multi-part definition, ' + g.parts_count + ' subparts</p>' +
+              g.definition_parts.map(function (p, i) { return '<p>(' + (i + 1) + ') ' + escapeHtml(p) + '</p>'; }).join('');
+          } else {
+            body = '<p>' + escapeHtml(g.definition) + '</p>';
+          }
+          return '<div class="verif-gloss-entry">' +
+            '<div class="verif-gloss-head"><h4><span class="verif-gloss-pt">' + ptStr + '</span>' + escapeHtml(g.term) + '</h4>' +
+            '<span class="verif-gloss-line">line ' + g.source_lines.join(',') + '</span></div>' +
+            body + '</div>';
+        }).join('')
+        : '<p class="verif-empty">No terms match the search.</p>';
+    });
+  }
+
+  function verifOpenAbout() {
+    const overlay = document.createElement('div');
+    overlay.className = 'verif-modal-overlay';
+    overlay.id = 'verif-about-modal';
+    overlay.innerHTML =
+      '<div class="verif-modal" style="max-width:640px;">' +
+      '<div class="verif-modal-head"><h2>How this view was built</h2>' +
+      '<button class="verif-modal-close">&times;</button></div>' +
+      '<div class="verif-modal-body verif-about-body">' +
+      '<p><strong>Purpose.</strong> A navigable index of every sentence about verification, audit, and authorised entities in Regulation (EU) 2025/40 (PPWR), drawn from three keyword-extracted source JSONs.</p>' +
+      '<p><strong>Discipline.</strong> Sentence text is byte-equal to the source. Article 3 definitions are byte-equal to the regulation. Mechanical tags (Commission-act mentions, external citations, glossary term presence) are derived from literal source words by regex. Topic chips are authored labels and the only field on this view carrying authoring judgment.</p>' +
+      '<p><strong>What this view is not.</strong> Not legal advice. Not an applicability assessment. Not a compliance check. Each user is responsible for reading the source sentence and deciding whether it applies to their own operation.</p>' +
+      '<p><strong>Surrounding paragraph context.</strong> Use the "Read in PPWR" link on any selected entry to open Regulation (EU) 2025/40 on EUR-Lex and navigate to the cited location.</p>' +
+      '<p><strong>Caveat on the glossary.</strong> 14 of 71 Article 3 definitions are extracted without their original point numbers because the regulation source markdown lost the (N) prefix during processing. Verify against the official OJ text before relying on these for compliance work.</p>' +
+      '<p class="verif-about-foot">Built 2026-05-01.</p>' +
+      '</div></div>';
+    document.body.appendChild(overlay);
+    overlay.querySelector('.verif-modal-close').addEventListener('click', function () { overlay.remove(); });
+    overlay.addEventListener('click', function (ev) { if (ev.target === overlay) overlay.remove(); });
+  }
+
+  async function verifLoadData() {
+    if (verifState.data) return verifState.data;
+    if (verifState.loading) return null;
+    verifState.loading = true;
+    try {
+      const resp = await fetch('data/ppwr_verification.json', { cache: 'no-cache' });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      verifState.data = await resp.json();
+      verifState.error = null;
+    } catch (e) {
+      verifState.error = e.message || 'Could not load verification data.';
+    } finally {
+      verifState.loading = false;
+    }
+    return verifState.data;
+  }
+
+  async function renderVerification(root) {
+    if (!verifState.data) {
+      root.appendChild(el('tpl-verification-loading'));
+      const data = await verifLoadData();
+      if (!data) {
+        root.innerHTML = '';
+        const errNode = el('tpl-verification-error');
+        const slot = errNode.querySelector('[data-slot=verif-error-msg]');
+        if (slot) slot.textContent = verifState.error || '';
+        root.appendChild(errNode);
+        return;
+      }
+      root.innerHTML = '';
+    }
+    const node = el('tpl-verification');
+    root.appendChild(node);
+
+    const scope = root;
+    verifBuildFilters(scope);
+    const search = scope.querySelector('[data-slot=verif-search]');
+    if (search) {
+      search.value = verifState.search;
+      search.addEventListener('input', function (ev) {
+        verifState.search = ev.target.value.trim();
+        verifRender(root);
+      });
+    }
+    const reset = scope.querySelector('[data-slot=verif-reset]');
+    if (reset) reset.addEventListener('click', verifResetFilters);
+    const gloss = scope.querySelector('[data-slot=verif-glossary-open]');
+    if (gloss) gloss.addEventListener('click', verifOpenGlossary);
+    const about = scope.querySelector('[data-slot=verif-about-open]');
+    if (about) about.addEventListener('click', verifOpenAbout);
+
+    verifRender(root);
   }
 
   // ---------- Boot ----------
