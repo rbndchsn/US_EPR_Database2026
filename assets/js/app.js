@@ -1141,6 +1141,11 @@
         '<div class="prose"><h1>Could not load data</h1><p>' + escapeHtml(e.message) + '</p></div>';
       return;
     }
+    // Populate footer fetched-at slot now that data is loaded.
+    if (state.metadata && state.metadata.fetched_at) {
+      const slot = document.querySelector('[data-slot=fetched-at]');
+      if (slot) slot.textContent = formatDate(state.metadata.fetched_at.slice(0, 10));
+    }
     window.addEventListener('hashchange', route);
     route();
   }
